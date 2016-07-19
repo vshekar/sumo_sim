@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Tue 19 Jul 2016 02:51:03 PM EDT by SUMO gui Version 0.25.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumo-gui.exeConfiguration.xsd">
+
+    <input>
+        <net-file value="../network/simple.net.xml"/>
+        <route-files value="../trips/trip.xml"/>
+        <additional-files value="additional.xml"/>
+    </input>
+
+    <output>
+        <summary-output value="../output/summary.xml"/>
+    </output>
+
+    <report>
+        <log value="../output/report.xml"/>
+    </report>
+
+</configuration>
