@@ -49,11 +49,11 @@ def gen_trips():
     return st
 
 def gen_trips_new():
-    tot_cars = 1000
+    tot_cars = 500
     curr_car = 0
     st = ""
     while curr_car < tot_cars:
-        st += '<trip id="%d" depart="%.2f" fromTaz="%s" toTaz="%s"/>\n' % (curr_car, curr_car*2.0,'source','dest')
+        st += '<trip id="%d" depart="%.2f" fromTaz="%s" toTaz="%s"/>\n' % (curr_car, curr_car*1.0,'source','source')
         curr_car += 1
     return st
 

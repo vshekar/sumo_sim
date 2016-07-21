@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+<input>
+<net-file value="../network/simple.net.xml"/>
+<route-files value="../trips/trip.xml"/>
+<additional-files value="additional_3to5__1000_20000.xml"/>
+</input>
+<output>
+<summary-output value="../output/summary_3to5__1000_20000.xml"/>
+</output>
+<report>
+<log value="../output/report_3to5__1000_20000.xml"/>
+</report>
+</configuration>

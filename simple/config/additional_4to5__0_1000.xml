@@ -1,0 +1,14 @@
+<additional>
+<taz id="source">
+<tazSource id="-1to0"/>
+<tazSink id="5to-5"/>
+</taz>
+<edgeData id="1" file="../output/edgeData_4to5__0_1000.xml" begin="0" end="500"/>
+<edgeData id="2" file="../output/edgeData_4to5__0_1000.xml" begin="500" end="1000"/>
+<edgeData id="3" file="../output/edgeData_4to5__0_1000.xml" begin="1000" end="20000"/>
+<rerouter id="1" edges="2to4 3to4">
+<interval begin="0" end="1000">
+<closingReroute id="4to5"/>
+</interval>
+</rerouter>
+</additional>
