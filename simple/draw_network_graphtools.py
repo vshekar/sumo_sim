@@ -22,8 +22,8 @@ if __name__=='__main__':
     densities = [t1_density,t2_density,t3_density]
 
     for fn in list_file:
-        #if fn == 'edgeData_2to4__500_1000.xml':
-        if fn == 'edgeData.xml':
+        if fn == 'edgeData_2to4__500_1000.xml':
+        #if fn == 'edgeData.xml':
             tree = ET.parse('./output/'+fn)
             root = tree.getroot()
             for i,interval in enumerate(root):
@@ -49,7 +49,7 @@ if __name__=='__main__':
                 eprop_text[i][e] = '0.0'
     
     for i in range(3):
-        graph_draw(g,vertex_text = g.vertex_index, vertex_font_size=18,vertex_fill_color='white',output_size=(1400,800),output="graph_"+str(i)+".pdf",pos = vprop_pos,edge_marker_size=40,vertex_size=45,edge_pen_width=3.0,edge_text=eprop_text[i],edge_font_size=50)
+        graph_draw(g,vertex_text = g.vertex_index, vertex_font_size=18,vertex_fill_color='white',output_size=(1400,800),output="graph_2to4_t"+str(i+1)+".pdf",pos = vprop_pos,edge_marker_size=40,vertex_size=45,edge_pen_width=3.0,edge_text=eprop_text[i],edge_font_size=45)
  
 
 
