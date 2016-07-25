@@ -25,7 +25,9 @@ def table():
             name = fn[8:-4]
             if len(name) == 0:
                 names.append("Full\nNetwork")
-                results["Full\nNetwork"] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
+                fn_time = float(root[-1].attrib['time'])
+                fn_mtt = float(root[-1].attrib['meanTravelTime'])
+                #results["Full\nNetwork"] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
             else:
                 name = name.split('_')
                 interval_str = ""
@@ -45,37 +47,41 @@ def table():
             #mergedlist.append(names[0])
             #mergedlist.extend(sorted(names[1:]))
                 
-    return results
+    return results,fn_time,fn_mtt
 
 def plot(results):
+    fn_time = results[1]
+    fn_mtt = results[2]
+    results = results[0]
     names = []
     mean_TTs = []
     sim_times = []
     for name in sorted(results.keys()):
         names.append(name)
-        sim_times.append(results[name][0])
-        mean_TTs.append(results[name][1])
+        sim_times.append(results[name][0]-fn_time)
+        mean_TTs.append(results[name][0]/fn_time)
         
     
-    f, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6), sharex=False)
+    #f, (ax2) = plt.subplots(1, 1, figsize=(8, 4), sharex=False)
+    f, (ax2) = plt.subplots(1, 1, sharex=False)
     
-    sns.barplot(names,sim_times,palette="Set3",ax=ax1)
-    ax1.set_ylabel('Total Simulation Time')
+    #sns.barplot(names,sim_times,palette="Set3",ax=ax1)
+    #ax1.set_ylabel('Simulation Time Difference')
     #ax1.grid(True, which='minor', color='b', linestyle='-')
-    ax1.grid(True)
+    #ax1.grid(True)
     sns.barplot(names,mean_TTs,palette="Set3",ax=ax2)
-    ax2.set_ylabel('Mean Travel Time')
+    ax2.set_ylabel('Simulation Time/Nominal Time')
     ax2.grid(True)
     sns.despine(bottom=True)
     #plt.xticks(rotation=20)
     
     plt.setp(f.axes)
     plt.sca(f.axes[0])
-    plt.yticks(np.arange(1600, 1850, 50))
-    plt.ylim(1600,1850)
-    plt.sca(f.axes[1])
-    plt.yticks(np.arange(200, 320, 10))
-    plt.ylim(200,320)
+    #plt.yticks(np.arange(1600, 1850, 50))
+    #plt.ylim(1600,1850)
+    #plt.sca(f.axes[1])
+    #plt.yticks(np.arange(200, 320, 10))
+    plt.ylim(1.0,1.12)
     plt.tight_layout(h_pad=3)
     plt.show()
 
