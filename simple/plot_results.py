@@ -32,11 +32,11 @@ def table():
                 name = name.split('_')
                 interval_str = ""
                 if int(name[2]) == 0:
-                    interval_str = 't1'
+                    interval_str = '$\Delta t1$'
                 elif int(name[2]) == 500:
-                    interval_str = 't2'
+                    interval_str = '$\Delta t2$'
                 elif int(name[2]) == 1000:
-                    interval_str = 't3'
+                    interval_str = '$\Delta t3$'
                 names.append(name[0][0] + "-" + name[0][-1]+ "\n" + interval_str)
                 results[name[0][0] + "-" + name[0][-1]+ "\n" + interval_str] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
                 #results[name[0][0] + "-" + name[0][-1]+ "\n" + interval_str]['mean_TT'] = float(root[-1].attrib['meanTravelTime'])
