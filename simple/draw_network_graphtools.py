@@ -36,17 +36,17 @@ if __name__=='__main__':
     
     eprop_text = [g.new_edge_property("string"),g.new_edge_property("string"),g.new_edge_property("string")]
     
-    t1_density = {}
-    t2_density = {}
-    t3_density = {}
-    densities = [t1_density,t2_density,t3_density]
+    
+    #densities = [t1_density,t2_density,t3_density,t4_density]
+    densities = [{} for i in range(4)]
 
     for fn in list_file:
-        if fn == 'edgeData.xml':
+        if fn == 'edgeData_2to4__1000_1500.xml':
         #if fn == 'edgeData.xml':
             tree = ET.parse('./output/'+fn)
             root = tree.getroot()
             for i,interval in enumerate(root):
+                print i
                 for edge in interval:
                     if (edge.attrib['id'] != '-1to0' and edge.attrib['id'] != '5to-5') and ('density' in edge.attrib.keys()):
                         print edge.attrib['id'] +  " : " + edge.attrib['density']
@@ -81,7 +81,7 @@ if __name__=='__main__':
                 eprop_color[i][e] = RGB_list[0]
     
     for i in range(3):
-        graph_draw(g,vertex_text = g.vertex_index, vertex_font_size=50,vertex_fill_color='white',output_size=(1300,900),output="graph_t"+str(i+1)+".pdf",pos = vprop_pos,edge_marker_size=40,vertex_size=45,edge_pen_width=eprop_thickness[i]  ,edge_text=eprop_text[i],edge_font_size=45,edge_color=eprop_color[i])
+        graph_draw(g,vertex_text = g.vertex_index, vertex_font_size=50,vertex_fill_color='white',output_size=(1300,900),output="graph_2to4_t3_t"+str(i+1)+".pdf",pos = vprop_pos,edge_marker_size=40,vertex_size=45,edge_pen_width=eprop_thickness[i]  ,edge_text=eprop_text[i],edge_font_size=45,edge_color=eprop_color[i])
  
 
 
