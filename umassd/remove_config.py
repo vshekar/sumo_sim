@@ -6,5 +6,5 @@ for f in files:
         with open('./output/'+f,'r') as fin:
             data = fin.readlines()
         with open('./output/'+f,'w') as fout:
-            fout.writelines(data[:1] + data[4:])
+            fout.writelines(data[:1] + data[3:])
 

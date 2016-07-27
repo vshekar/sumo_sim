@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 07/26/16 22:22:22 by SUMO Version 0.27.0
-<?xml version="1.0" encoding="UTF-8"?>
-
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
-
-    <input>
-        <net-file value="./../network/umassd.net.xml"/>
-        <route-files value="./../trips/trip.xml"/>
-        <additional-files value="./additional_-12814#16__3000_6000.xml"/>
-    </input>
-
-    <output>
-        <summary-output value="./../output/summary_-12814#16__3000_6000.xml"/>
-    </output>
-
-    <processing>
-        <time-to-teleport value="-1"/>
-    </processing>
-
-    <report>
-        <log value="./../output/report_-12814#16__3000_6000.xml"/>
-    </report>
-
-</configuration>
--->
-
 <summary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/summary_file.xsd">
     <step time="0.00" loaded="2" inserted="1" running="1" waiting="0" ended="0" meanWaitingTime="0.00" meanTravelTime="-1.00" duration="0"/>
     <step time="1.00" loaded="2" inserted="1" running="1" waiting="0" ended="0" meanWaitingTime="0.00" meanTravelTime="-1.00" duration="0"/>
