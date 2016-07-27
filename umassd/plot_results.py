@@ -18,6 +18,7 @@ def table():
     results = {}
     for fn in list_file:
         if 'summary' in  fn:
+            print fn
             tree = ET.parse('./output/'+fn)
             root = tree.getroot()
             
@@ -37,8 +38,8 @@ def table():
                     interval_str = '$\Delta t2$'
                 elif int(name[2]) == 6000:
                     interval_str = '$\Delta t3$'
-                names.append(name[0][0] + "-" + name[0][-1]+ "\n" + interval_str)
-                results[name[0][0] + "-" + name[0][-1]+ "\n" + interval_str] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
+                names.append(name[0] + "\n" + interval_str)
+                results[name[0] + "\n" + interval_str] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
                 #results[name[0][0] + "-" + name[0][-1]+ "\n" + interval_str]['mean_TT'] = float(root[-1].attrib['meanTravelTime'])
             
             #sim_times.append(float(root[-1].attrib['time']))
@@ -81,7 +82,7 @@ def plot(results):
     #plt.ylim(1600,1850)
     #plt.sca(f.axes[1])
     #plt.yticks(np.arange(200, 320, 10))
-    plt.ylim(1.0,1.12)
+    #plt.ylim(1.0,1.12)
     plt.tight_layout(h_pad=3)
     plt.show()
 
