@@ -40,9 +40,9 @@ def table():
                     interval_str = '$\Delta t2$'
                 elif int(name[2]) == 1000:
                     interval_str = '$\Delta t3$'
-                names.append(name[0][0]+'to'+name[0][-1] + "\n" + interval_str)
-                results[name[0][0]+'to'+name[0][-1] + "\n" + interval_str] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
-                link_name.append(name[0][0]+'to'+name[0][-1])
+                names.append(name[0][0]+' to '+name[0][-1] + "\n" + interval_str)
+                results[name[0][0]+' to '+name[0][-1] + "\n" + interval_str] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
+                link_name.append(name[0][0]+' to '+name[0][-1])
                 time_interval.append(interval_str)
                 sim_times.append(float(root[-1].attrib['time']))
                 
@@ -76,7 +76,7 @@ def plot(results):
     """    
     
     #f, (ax2) = plt.subplots(1, 1, figsize=(8, 4), sharex=False)
-    sns.set(font_scale=2.5)
+    sns.set(font_scale=(3.5))
     f, (ax2) = plt.subplots(1, 1, sharex=False)
     
     #sns.barplot(names,sim_times,palette="Set3",ax=ax1)
@@ -97,7 +97,7 @@ def plot(results):
     #plt.ylim(1600,1850)
     #plt.sca(f.axes[1])
     #plt.yticks(np.arange(200, 320, 10))
-    plt.ylim(0.8,1.2)
+    plt.ylim(1.0,1.12)
     #plt.tight_layout(h_pad=3)
     plt.show()
 

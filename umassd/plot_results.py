@@ -18,7 +18,7 @@ def table():
     link_name = []
     time_interval = []
     results = {}
-    name_map={'--12814#1':'S1','--12814#2':'S2','--12814#3':'S3','--12814#4':'S4','--12814#6':'S5','--12814#7':'S6','--12814#9':'S7','--12814#10':'S8','-12814#13':'S9','-12814#14':'S10','-12814#15':'S11','-12814#16':'S12'}
+    name_map={'--12814#1':'$S_1$','--12814#2':'$S_2$','--12814#3':'$S_3$','--12814#4':'$S_4$','--12814#6':'$S_5$','--12814#7':'$S_6$','--12814#9':'$S_7$','--12814#10':'$S_8$','-12814#13':'$S_9$','-12814#14':'$S_{10}$','-12814#15':'$S_{11}$','-12814#16':'$S_{12}$'}
     for fn in natsorted(list_file):
         if 'summary' in  fn:
             #print fn
@@ -78,7 +78,7 @@ def plot(results):
     """    
     
     #f, (ax2) = plt.subplots(1, 1, figsize=(8, 4), sharex=False)
-    sns.set(font_scale=2.5)
+    sns.set(font_scale=3.5)
     f, (ax2) = plt.subplots(1, 1, sharex=False)
     
     #sns.barplot(names,sim_times,palette="Set3",ax=ax1)
@@ -86,7 +86,7 @@ def plot(results):
     #ax1.grid(True, which='minor', color='b', linestyle='-')
     #ax1.grid(True)
     #sns.barplot(names,mean_TTs,palette="Set3",ax=ax2)
-    row_order = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12']
+    row_order = ['$S_1$','$S_2$','$S_3$','$S_4$','$S_5$','$S_6$','$S_7$','$S_8$','$S_9$','$S_{10}$','$S_{11}$','$S_{12}$']
     sns.barplot(x='Link',y='Time',hue='Interval',data=results,hue_order=['$\Delta t1$','$\Delta t2$','$\Delta t3$'],palette="muted",order=row_order)
     ax2.set_ylabel('Simulation Time/Nominal Time')
     ax2.set_xlabel('Disabled Link')
@@ -100,7 +100,7 @@ def plot(results):
     #plt.ylim(1600,1850)
     #plt.sca(f.axes[1])
     #plt.yticks(np.arange(200, 320, 10))
-    plt.ylim(0.8,1.2)
+    plt.ylim(0.90,1.2)
     #plt.tight_layout(h_pad=3)
     plt.show()
 

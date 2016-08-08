@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 07/26/16 22:19:00 by SUMO Version 0.27.0
-<?xml version="1.0" encoding="UTF-8"?>
-
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
-
-    <input>
-        <net-file value="./../network/umassd.net.xml"/>
-        <route-files value="./../trips/trip.xml"/>
-        <additional-files value="./additional_--12814#1__6000_9000.xml"/>
-    </input>
-
-    <output>
-        <summary-output value="./../output/summary_--12814#1__6000_9000.xml"/>
-    </output>
-
-    <processing>
-        <time-to-teleport value="-1"/>
-    </processing>
-
-    <report>
-        <log value="./../output/report_--12814#1__6000_9000.xml"/>
-    </report>
-
-</configuration>
--->
-
 <meandata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/meandata_file.xsd">
     <interval begin="0.00" end="3000.00" id="1">
         <edge id="--12769#0" sampledSeconds="0.00" departed="0" arrived="0" entered="0" left="0" laneChangedFrom="0" laneChangedTo="0"/>
