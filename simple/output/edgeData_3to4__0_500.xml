@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Tue Jul 26 13:52:36 2016 by SUMO Version 0.27.0
+<!-- generated on Tue Aug  9 14:13:50 2016 by SUMO Version 0.27.1
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="./../network/simple.net.xml"/>
-        <route-files value="./../trips/trip.xml"/>
-        <additional-files value="./additional_3to4__0_500.xml"/>
+        <net-file value="./config/../network/simple.net.xml"/>
+        <route-files value="./config/../trips/trip.xml"/>
+        <additional-files value="./config/additional_3to4__0_500.xml"/>
     </input>
 
     <output>
-        <summary-output value="./../output/summary_3to4__0_500.xml"/>
+        <summary-output value="./config/../output/summary_3to4__0_500.xml"/>
     </output>
 
     <report>
-        <log value="./../output/report_3to4__0_500.xml"/>
+        <log value="./config/../output/report_3to4__0_500.xml"/>
     </report>
 
 </configuration>
