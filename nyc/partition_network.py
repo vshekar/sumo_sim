@@ -43,7 +43,7 @@ def gen_graph(fn):
     node_map = {}
     node_count = 1
     for el in root:
-        if el.tag == 'edge' and 'function' not in el.attrib.keys() and 'shape' in el.attrib.keys():
+        if el.tag == 'edge' and 'function' not in el.attrib.keys():
             edge_id = el.attrib['id']
             start_node = el.attrib['from']
             end_node = el.attrib['to']
