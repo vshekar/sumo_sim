@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 import networkx as nx
 #import metis
 
-
+#This function generates an input file for metis
 def start():
     fn = './network/nyc.net.xml'
     G,node_map = gen_graph(fn)
@@ -15,14 +15,15 @@ def start():
             st += str(node) + ' '
         f.writelines(st+'\n')
     f.close()
-        
+
+#This function assigns the edges to a zone as defined by the metis output file
 def gen_zones():
     zone_fn = './network/zone'
     fn = './network/nyc.net.xml'
     G,node_map = gen_graph(fn)
     zone_list = []
-    zones = [[] for i in range(20)]
-    zones_fn = './network/nyc_metis.txt.part.20'
+    zones = [[] for i in range(21)]
+    zones_fn = './network/nyc_metis.txt.part.21'
     for i,line in enumerate(open(zones_fn,'r')):
         zone_list.append(int(line))
         edges = nx.edges(G,i+1)
@@ -35,7 +36,7 @@ def gen_zones():
             f.writelines('edge:'+edge+'\n')
         f.close()
 
-
+#This function is used by gen_zones to create a networkx network
 def gen_graph(fn):
     tree = ET.parse(fn)
     root = tree.getroot()
@@ -61,6 +62,6 @@ def gen_graph(fn):
     return G,node_map
     
 
-#gen_graph()
+
 #start()
 gen_zones()
