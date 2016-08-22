@@ -27,7 +27,7 @@ def generate_config(edge,interval,suffix):
     f.close()
 
 def generate_additional(edge,interval,intervals,suffix):
-    #bridge_list = ['-986995','-984563','-984050','-987750','-988842#1','-984538','-987591','--984057#4','--982319','-989266','-982811','-988734','-984487','-982139','-984682#1','-987406','-986109','-984995','-983039']
+
     additional_filepath = './additional'+suffix+'.xml'
     add_file = open(additional_filepath,'w')
     
@@ -96,7 +96,7 @@ def start():
                                      
     
     #dest_edges = ['4to5','3to5']
-    intervals = [(0,3000),(3000,6000),(6000,9000)]
+    intervals = [(0,5000),(5000,10000),(10000,15000)]
     for edge in vul_edges.items():
         for interval in intervals:
             suffix = '_' + edge[0] + '__' +str(interval[0]) + '_' +str(interval[1])
