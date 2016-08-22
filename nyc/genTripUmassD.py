@@ -17,7 +17,7 @@ def gen_trips():
     st = ""
     while curr_car < tot_cars:
         zone = random.choice(source_list)
-        st += '<trip id="%d" depart="%.2f" from="%s" to="%s"/>\n' % (curr_car, curr_car*1.0,zone,zone)
+        st += '<trip id="%d" depart="%.2f" fromTaz="%s" toTaz="%s"/>\n' % (curr_car, curr_car*1.0,zone,zone)
         curr_car += 1
     return st
 	
