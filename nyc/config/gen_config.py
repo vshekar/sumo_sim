@@ -66,7 +66,7 @@ def generate_additional(edge,interval,intervals,suffix):
                             '<edgeData id="1" file="../output/edgeData'+ suffix +'.xml" begin="'+ str(intervals[0][0]) + '" end="'+ str(intervals[0][1]) + '"/>\n'
                             '<edgeData id="2" file="../output/edgeData'+ suffix +'.xml" begin="'+ str(intervals[1][0]) + '" end="'+ str(intervals[1][1]) + '"/>\n'
                             '<edgeData id="3" file="../output/edgeData'+ suffix +'.xml" begin="'+ str(intervals[2][0]) + '" end="'+ str(intervals[2][1]) + '"/>\n'
-                            '<edgeData id="4" file="../output/edgeData'+ suffix +'.xml" begin="'+ str(intervals[2][1]) + '" end="10000"/>\n'
+                            '<edgeData id="4" file="../output/edgeData'+ suffix +'.xml" begin="'+ str(intervals[2][1]) + '" end="100000"/>\n'
                     '<rerouter id="1" edges="'+ reroute_edges +'">\n'
                             '<interval begin="'+ str(interval[0]) +'" end="'+ str(interval[1]) +'">\n'
                                     '<closingReroute id="'+ edge[0] +'"/>\n' 
