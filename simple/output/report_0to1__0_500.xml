@@ -1,13 +1,19 @@
-Loading net-file from 'D:\Project Code\sumo_sim\simple\config\../network/simple.net.xml'... done (35ms).
-Loading additional-files from 'D:\Project Code\sumo_sim\simple\config\additional_0to1__0_500.xml'... done (33ms).
+Loading net-file from './../network/simple.net.xml'... done (2ms).
+Loading additional-files from './additional_0to1__0_500.xml'... done (1ms).
 Loading done.
-Running start /B "" "D:\Program Files (x86)\DLR\Sumo\/bin/netedit" --registry-viewport -s D:\Project Code\sumo_sim\simple\config\../network/simple.net.xml.
+Simulation started with time: 0.00
+Simulation ended at time: 1666.00
+Reason: All vehicles have left the simulation.
 Performance: 
- Duration: 59628ms
- Real time factor: 0
- UPS: 0.000000
+ Duration: 4298ms
+ Real time factor: 387.622
+ UPS: 26059.329921
 Vehicles: 
- Inserted: 0 (Loaded: 2)
+ Inserted: 500
  Running: 0
  Waiting: 0
 
+AStarRouter answered 167 queries and explored 8.00 edges on average.
+AStarRouter spent 0ms answering queries (0.00ms on average).
+DijkstraRouterTT answered 115379 queries and explored 14.01 edges on average.
+DijkstraRouterTT spent 105ms answering queries (0.00ms on average).

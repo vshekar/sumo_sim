@@ -7,6 +7,10 @@
 <edgeData id="2" file="../output/edgeData_3to5__0_500.xml" begin="500" end="1000"/>
 <edgeData id="3" file="../output/edgeData_3to5__0_500.xml" begin="1000" end="1500"/>
 <edgeData id="4" file="../output/edgeData_3to5__0_500.xml" begin="1500" end="10000"/>
+<edgeData id="5" file="../output/edgeData_3to5__0_500.xml" begin="0" end="500" type="emissions"/>
+<edgeData id="6" file="../output/edgeData_3to5__0_500.xml" begin="500" end="1000" type="emissions"/>
+<edgeData id="7" file="../output/edgeData_3to5__0_500.xml" begin="1000" end="1500" type="emissions"/>
+<edgeData id="8" file="../output/edgeData_3to5__0_500.xml" begin="1500" end="10000" type="emissions"/>
 <rerouter id="1" edges="1to3 4to3 5to3">
 <interval begin="0" end="500">
 <closingReroute id="3to5"/>

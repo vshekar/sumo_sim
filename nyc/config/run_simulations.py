@@ -36,7 +36,28 @@ def get_sources():
     link_lists = chunk_gen(sources, 20)
     for i in range(20):
         write_zone(next(link_lists),i)
-        
+
+#This is a temp function to remove links in zone files that are not present in the network. Valid links are described in         
+def clean_zones():
+    zone_fn = '../network/zone'
+    bridge_fn = '../network/select.txtcomp0.txt'
+    bridges = []
 
 
-get_sources2()
+    with open(bridge_fn,'r') as f:
+        for line in f:
+            bridges.append(line)
+
+    for i in range(20):
+        temp_list = []
+        with open(zone_fn+str(i)+'.txt','r') as f:
+            for line in f:
+                if line in bridges:
+                    temp_list.append(line)
+
+        with open(zone_fn+str(i)+'.txt','w') as f:
+            for line in temp_list:
+                f.writelines(line)
+    print("Complete")
+
+clean_zones()
