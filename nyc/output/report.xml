@@ -1,27 +1,29 @@
-Loading net-file from '../network/nyc.net.xml'... done (1697ms).
-Loading additional-files from 'additional.xml'... done (50ms).
+Loading net-file from 'C:\Users\Shekar\Documents\GitHub\sumo_sim\nyc\config\../network/nyc.net.xml'... done (2175ms).
+Loading additional-files from 'C:\Users\Shekar\Documents\GitHub\sumo_sim\nyc\config\additional.xml'... done (72ms).
 Loading done.
 Simulation started with time: 0.00
-Warning: Vehicle '1066' performs emergency stop at the end of lane '-981216#0_0' because of a red traffic light (decel=-11.67), time=1492.00.
-Error: Negative vehicle step fraction for '1066' on lane '-986183_0'.
-Warning: Vehicle '7242' performs emergency stop at the end of lane '-981216#0_1' because of a red traffic light (decel=-12.86), time=8872.00.
-Error: Negative vehicle step fraction for '7242' on lane '-986183_1'.
-Error: Negative vehicle step fraction for '7242' on lane '-986183_1'.
-Warning: Vehicle '10196' performs emergency stop at the end of lane '-981216#0_0' because of a red traffic light (decel=-12.17), time=10942.00.
-Warning: Teleporting vehicle '10190'; collision with vehicle '10196', lane=':-991415_1_0', gap=-4.03, time=10945.00 stage=move.
-Warning: Vehicle '10190' ends teleporting on edge '-981216#0', time 10945.00.
-Simulation ended at time: 13016.00
-Reason: All vehicles have left the simulation.
+Warning: Teleporting vehicle '952'; waited too long (wrong lane), lane='-987646#1_1', time=1797.00.
+Warning: Vehicle '952' ends teleporting on edge '-984201', time 1797.00.
+Warning: Teleporting vehicle '1189'; waited too long (yield), lane='-987646#0_1', time=1959.00.
+Warning: Vehicle '1189' ends teleporting on edge '-984201', time 1961.00.
+Warning: Teleporting vehicle '863'; waited too long (wrong lane), lane='-987646#1_1', time=2157.00.
+Warning: Vehicle '863' ends teleporting on edge '-984201', time 2157.00.
+Warning: Teleporting vehicle '679'; waited too long (yield), lane='-984905#2_1', time=2158.00.
+Warning: Vehicle '679' ends teleporting on edge '-984201', time 2160.00.
+Warning: Vehicle '2055' performs emergency stop at the end of lane '-981216#0_0' because of a red traffic light (decel=-12.56), time=2482.00.
+Error: Negative vehicle step fraction for '2055' on lane '-986183_0'.
+Warning: Teleporting vehicle '1182'; waited too long (wrong lane), lane='-987646#1_1', time=2739.00.
+Warning: Vehicle '1182' ends teleporting on edge '-984201', time 2739.00.
 Performance: 
- Duration: 155830ms
- Real time factor: 83.5269
- UPS: 44834.762241
+ Duration: 60345ms
+ Real time factor: 52.3324
+ UPS: 28901.632281
 Vehicles: 
- Inserted: 10500
- Running: 0
+ Inserted: 3158 (Loaded: 3218)
+ Running: 666
  Waiting: 0
-Teleports: 1 (Collisions: 1)
-Emergency Stops: 3
+Teleports: 5 (Yield: 2, Wrong Lane: 3)
+Emergency Stops: 1
 
-DijkstraRouterTT answered 16450 queries and explored 6947.69 edges on average.
-DijkstraRouterTT spent 51378ms answering queries (3.12ms on average).
+DijkstraRouterTT answered 4674 queries and explored 7282.75 edges on average.
+DijkstraRouterTT spent 15227ms answering queries (3.26ms on average).

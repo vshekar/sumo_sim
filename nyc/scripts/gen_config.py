@@ -5,8 +5,9 @@ import networkx as nx
 import os
 
 
+
 def generate_config(edge,interval,suffix):
-    config_filepath = './config'+suffix+'.sumocfg'
+    config_filepath = '../config/config'+suffix+'.sumocfg'
     f = open(config_filepath,'w')
     lines = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                     '<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">\n'
@@ -28,7 +29,7 @@ def generate_config(edge,interval,suffix):
 
 def generate_additional(edge,interval,intervals,suffix):
 
-    additional_filepath = './additional'+suffix+'.xml'
+    additional_filepath = '../config/additional'+suffix+'.xml'
     add_file = open(additional_filepath,'w')
     
     reroute_edges = ""
@@ -108,6 +109,5 @@ def start():
             #print "\n"
                     
 if __name__=='__main__':
-    
     start()
     print("Done")

@@ -4,8 +4,8 @@ If the edge is present in full_bridges, it is removed from the zone
 """
 
 
-zone_fn = './network/zone'
-bridge_fn = './network/full_bridges.txt'
+zone_fn = '../network/zone'
+bridge_fn = '../network/full_bridges.txt'
 bridges = []
 
 
@@ -24,4 +24,4 @@ for i in range(20):
     with open(zone_fn+str(i)+'.txt','w') as f:
         for line in temp_list:
             f.writelines(line)
-print "Complete"
+print("Complete")

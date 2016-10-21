@@ -33,16 +33,20 @@ def main():
     
     options, remaining_args = optParser.parse_args(args=args)
     
-    net = sumolib.net.readNet('./network/nyc.net.xml')
+    net = sumolib.net.readNet('../network/nyc.net.xml')
     selections = []
     color_list = ['r','g','b','c','m','y','b']
     
     colors = {}
     widths = {}
-    
-    for i in range(21):
-        selections.append(sumolib.files.selection.read('./network/zone'+str(i)+'.txt')) 
-    
+
+    zone_path = '../network'
+    zone_files = [os.path.join(zone_path,f) for f in os.listdir(zone_path) if 'zone' in f]
+    print(zone_files)
+
+    for zone in zone_files:
+        selections.append(sumolib.files.selection.read(zone))
+
     for i,selection in enumerate(selections):
         for e in selection["edge"]:
             colors[e] = color_list[i%7]
