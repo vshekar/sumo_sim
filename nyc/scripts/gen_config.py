@@ -100,7 +100,11 @@ def start():
     intervals = [(0,5000),(5000,10000),(10000,15000)]
     for edge in vul_edges.items():
         for interval in intervals:
-            suffix = '_' + edge[0] + '__' +str(interval[0]) + '_' +str(interval[1])
+            if '--' in edge[0]:
+                suffix = '_' + edge[0][2:] + '__' +str(interval[0]) + '_' +str(interval[1])
+            else:
+                suffix = '_' + edge[0] + '__' +str(interval[0]) + '_' +str(interval[1])
+                
             generate_config(edge,interval,suffix)
             generate_additional(edge,interval,intervals,suffix)
             #print suffix +'\n'

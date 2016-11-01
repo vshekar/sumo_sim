@@ -6,13 +6,13 @@ import random
 
 #dest_list = ['-12826']
 
-source_list = ['zone'+str(i) for i in range(20)]
+source_list = ['zone'+str(i) for i in range(21)]
 
 fl = '<?xml version="1.0"?>\n<trips>'
 
 
 def gen_trips():
-    tot_cars = 10500
+    tot_cars = 100000
     curr_car = 0
     st = ""
     while curr_car < tot_cars:
@@ -33,5 +33,5 @@ def gen_trips_new():
 fl += gen_trips()
 fl += '</trips>'
 
-f = open('./trips/trip.xml','w')
+f = open('../trips/trip.xml','w')
 f.write(fl)
