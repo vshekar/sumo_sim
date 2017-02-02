@@ -104,7 +104,7 @@ def plot(results):
 def plot_pollution(data):
     print len(data[0])
     #data = data[0]
-    filenames = ['Nominal','$l_{2,4}$ at $\delta t_0$','$l_{2,4}$ at $\delta t_1$','$l_{2,4}$ at $\delta t_2$']
+    filenames = ['Nominal','$L_{2,4}$ at $\Delta t_1$','$L_{2,4}$ at $\Delta t_2$','$L_{2,4}$ at $\Delta t_3$']
     styles = ['solid','dashed','dotted','dashdot']
     #print data
     sns.set(font_scale=1.5)
@@ -151,19 +151,19 @@ def plot_num_veh(filenames):
     sns.set(font_scale=1.5)
     sns.set_style("darkgrid")
     f, (ax2) = plt.subplots(1, 1, sharex=False)
-    labels = ['Nominal','$l_{2,4}$ at $\delta t_0$','$l_{2,4}$ at $\delta t_1$','$l_{2,4}$ at $\delta t_2$']
+    labels = ['Nominal','$L_{2,4}$ at $\Delta t_1$','$L_{2,4}$ at $\Delta t_2$','$L_{2,4}$ at $\Delta t_3$']
     styles = ['solid','dashed','dotted','dashdot']
     for f,filename in enumerate(filenames):
         num_veh = []
         tree = ET.parse(filename)
         root = tree.getroot()
         for i,step in enumerate(root):
-            num_veh.append(500-int(step.attrib['ended']))
+            num_veh.append(int(step.attrib['running']))
         
         print labels[f] + " : " + str(np.trapz(num_veh))
         plt.plot(num_veh,label=labels[f],linestyle=styles[f])
     plt.legend(bbox_to_anchor=(.75, 1), loc=2, borderaxespad=0.)
-    ax2.set_ylabel('Number of vehicles remaining to evacuate')
+    ax2.set_ylabel('Number of vehicles in the network')
     ax2.set_xlabel('Time (seconds)')
     plt.xticks(np.arange(0, 2000, 200))
     plt.savefig('out.pdf', bbox_inches='tight', pad_inches=0.05)
@@ -183,12 +183,14 @@ def plot_dist(filename):
     plt.savefig(filename+'.pdf', bbox_inches='tight', pad_inches=0.05)
 
     
-#filenames = ['../output/edgeData.xml','../output/edgeData_2to4__0_500.xml','../output/edgeData_2to4__500_1000.xml','../output/edgeData_2to4__1000_1500.xml']
+filenames = ['../output/edgeData.xml','../output/edgeData_2to4__0_500.xml','../output/edgeData_2to4__500_1000.xml','../output/edgeData_2to4__1000_1500.xml']
 #filenames = ['../output/summary.xml','../output/summary_2to4__0_500.xml','../output/summary_2to4__500_1000.xml','../output/summary_2to4__1000_1500.xml']
-filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
+#filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
 
-#plot_pollution(extract_pollution(filenames))
+plot_pollution(extract_pollution(filenames))
 #plot(table())
 #plot_num_veh(filenames)
-for filename in filenames:
-    plot_dist(filename)
+#for filename in filenames:
+#    print filename
+#    plot_dist(filename)
+    
