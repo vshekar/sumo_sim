@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 02/21/17 15:52:19 by SUMO Version 0.27.1
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="../config/../network/SF_with_TLS.net.xml"/>
+        <route-files value="../config/../trips/route.rou.xml"/>
+        <additional-files value="../config/additional.xml"/>
+    </input>
+
+    <output>
+        <summary-output value="../config/../output/summary.xml"/>
+    </output>
+
+    <report>
+        <log value="../config/../output/report.xml"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="30982"/>
+    </traci_server>
+
+</configuration>
+-->
+
+<summary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/summary_file.xsd">
+    <step time="0.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="3014772"/>
+    <step time="1.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="2.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="3.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="4.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="5.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="6.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="7.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="8.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="9.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+    <step time="10.00" loaded="1" inserted="0" running="0" waiting="0" ended="0" meanWaitingTime="-1.00" meanTravelTime="-1.00" duration="0"/>
+</summary>
