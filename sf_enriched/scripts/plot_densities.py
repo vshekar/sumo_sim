@@ -6,9 +6,9 @@ import statistics
 
 
 
-net = sumolib.net.readNet('SF_with_TLS.net.xml')
+net = sumolib.net.readNet('../network/SF_with_TLS.net.xml')
 
-tree = ET.parse('edgeData.xml')
+tree = ET.parse('../output/edgeData.xml')
 root = tree.getroot()
 
 densities = []
@@ -85,7 +85,7 @@ for i,interval in enumerate(densities):
 	ax.set_aspect("equal", None, 'C')
 	helpers.plotNet(net, colors, widths, options)
 	ax.set_title( '{num1:02d}:00:00 to {num2:02d}:00:00 hrs'.format(num1=(i+6)%24,num2=(i+7)%24))
-	fig.savefig('hour'+str(i)+'.pdf', bbox_inches='tight',pad_inches=0)
+	fig.savefig('../24 hour plot/hour'+str(i)+'.pdf', bbox_inches='tight',pad_inches=0)
 	options.nolegend = True
 
 	helpers.closeFigure(fig, ax, options)

@@ -1,9 +1,9 @@
 import xml.etree.ElementTree as ET
+import math
 
 
 
-
-tree = ET.parse('route.rou.xml')
+tree = ET.parse('../trips/route.rou.xml')
 root = tree.getroot()
 
 for vehicle in root:
@@ -11,8 +11,10 @@ for vehicle in root:
 		rt = route.attrib['edges'].split()
 		l = int(len(rt)/2)
 		if l >1:
-			route.attrib['edges'] = ' '.join(rt[0:l])
+			start = math.ceil(l/2)
+			end = -1 * math.floor(l/2)
+			route.attrib['edges'] = ' '.join(rt[start:end])
 
 
-tree.write('new_route.rou.xml')
+tree.write('../trips/new_route.rou.xml')
 		
