@@ -1,0 +1,22 @@
+Loading net-file from 'D:\Project Code\sumo_sim\nyc\config\../network/nyc.net.xml'... done (3652ms).
+Loading additional-files from 'D:\Project Code\sumo_sim\nyc\config\additional_-982139__0_5000.xml'... done (99ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Teleporting vehicle '580'; waited too long (yield), lane='-987646#0_1', time=1330.00.
+Warning: Vehicle '580' ends teleporting on edge '-984201', time 1332.00.
+Warning: Teleporting vehicle '499'; waited too long (wrong lane), lane='-987646#1_1', time=1443.00.
+Warning: Vehicle '499' ends teleporting on edge '-984201', time 1443.00.
+Performance: 
+ Duration: 47392ms
+ Real time factor: 36.0609
+ UPS: 16848.877448
+Vehicles: 
+ Inserted: 1708 (Loaded: 1811)
+ Running: 649
+ Waiting: 1
+Teleports: 2 (Yield: 1, Wrong Lane: 1)
+
+AStarRouter answered 45 queries and explored 5121.60 edges on average.
+AStarRouter spent 178ms answering queries (3.96ms on average).
+DijkstraRouterTT answered 2564 queries and explored 6908.36 edges on average.
+DijkstraRouterTT spent 11948ms answering queries (4.66ms on average).

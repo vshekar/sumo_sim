@@ -104,7 +104,7 @@ def plot(results):
 def plot_pollution(data):
     print len(data[0])
     #data = data[0]
-    filenames = ['Nominal','$L_{2,4}$ at $\Delta t_1$','$L_{2,4}$ at $\Delta t_2$','$L_{2,4}$ at $\Delta t_3$']
+    filenames = ['Nominal','$l_{2,4}$ at $\delta t_1$','$l_{2,4}$ at $\delta t_2$','$l_{2,4}$ at $\delta t_3$']
     styles = ['solid','dashed','dotted','dashdot']
     #print data
     sns.set(font_scale=1.5)
@@ -117,8 +117,8 @@ def plot_pollution(data):
         if max(dat[0])>max_time:
             max_time = max(dat[0])
     plt.legend(bbox_to_anchor=(.05, 1), loc=2, borderaxespad=0.)
-    #ax2.set_ylabel('$CO_{2}$ released (Kg)')
-    ax2.set_ylabel('Fuel consumed (Liters)')
+    ax2.set_ylabel('$CO_{2}$ released (Kg)')
+    #ax2.set_ylabel('Fuel consumed (Liters)')
     ax2.set_xlabel('Time (seconds)')
     plt.xlim(0,max_time)
     plt.xticks(np.arange(0, max_time, 200))
@@ -137,7 +137,7 @@ def extract_pollution(filenames):
         for i,interval in enumerate(root):
             if (interval.attrib['id']=="em1"):
                 for edge in interval:
-                    prev_total += float(edge.attrib['fuel_abs'])/1000
+                    prev_total += float(edge.attrib['CO2_abs'])/1000000
                     #row = {'Time Step':float(interval.attrib['begin']),'Pollution Amount':prev_total,'Case':filename}
                     time.append(float(interval.attrib['begin']))
                     poll.append(prev_total)
@@ -151,7 +151,7 @@ def plot_num_veh(filenames):
     sns.set(font_scale=1.5)
     sns.set_style("darkgrid")
     f, (ax2) = plt.subplots(1, 1, sharex=False)
-    labels = ['Nominal','$L_{2,4}$ at $\Delta t_1$','$L_{2,4}$ at $\Delta t_2$','$L_{2,4}$ at $\Delta t_3$']
+    labels = ['Nominal','$l_{2,4}$ at $\delta t_1$','$l_{2,4}$ at $\delta t_2$','$l_{2,4}$ at $\delta t_3$']
     styles = ['solid','dashed','dotted','dashdot']
     for f,filename in enumerate(filenames):
         num_veh = []
@@ -183,13 +183,13 @@ def plot_dist(filename):
     plt.savefig(filename+'.pdf', bbox_inches='tight', pad_inches=0.05)
 
     
-filenames = ['../output/edgeData.xml','../output/edgeData_2to4__0_500.xml','../output/edgeData_2to4__500_1000.xml','../output/edgeData_2to4__1000_1500.xml']
-#filenames = ['../output/summary.xml','../output/summary_2to4__0_500.xml','../output/summary_2to4__500_1000.xml','../output/summary_2to4__1000_1500.xml']
+#filenames = ['../output/edgeData.xml','../output/edgeData_2to4__0_500.xml','../output/edgeData_2to4__500_1000.xml','../output/edgeData_2to4__1000_1500.xml']
+filenames = ['../output/summary.xml','../output/summary_2to4__0_500.xml','../output/summary_2to4__500_1000.xml','../output/summary_2to4__1000_1500.xml']
 #filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
 
-plot_pollution(extract_pollution(filenames))
+#plot_pollution(extract_pollution(filenames))
 #plot(table())
-#plot_num_veh(filenames)
+plot_num_veh(filenames)
 #for filename in filenames:
 #    print filename
 #    plot_dist(filename)
