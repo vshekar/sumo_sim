@@ -27,7 +27,7 @@ class SumoSim():
     SUMOBIN = "sumo"
 
     SUMOCMD = [SUMOBIN, "-c", "../config/config_with_TLS.sumocfg", "--ignore-route-errors", "true", "-W", "true", "--time-to-teleport", "3600"]
-    ENGINE = create_engine('sqlite:///test.db')
+    ENGINE = create_engine('sqlite:///test.db', connect_args={'timeout':15})
 
     Base.metadata.bind = ENGINE
     DBSession = sessionmaker(bind=ENGINE)
@@ -100,9 +100,15 @@ class SumoSim():
                     for i in range(sl.num_lanes):
                         traci.lane.setAllowed(str(link_disrupted)+ "_" + str(sl.sublink) + "_" + str(i),[])
 
+
+	    elif step > end_disruption:
                 for vehicle in stopped_vehicles:
-                    traci.route.add(str(vehicle[0]), [vehicle[1], vehicle[2]])
-                    traci.vehicle.add(str(vehicle[0]),str(vehicle[0]), typeID="reroutingType")
+		    try:
+                        traci.route.add(str(vehicle[0]), [vehicle[1], vehicle[2]])
+                        traci.vehicle.add(str(vehicle[0]),str(vehicle[0]), typeID="reroutingType")
+                    except:
+                        print("Stopped vehicle cannot be added")
+                        pass
             
             #Data collection code
             if begin_delta < step <= end_delta:
