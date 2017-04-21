@@ -14,10 +14,10 @@ def start():
         if rank == i%73:
             ss = SumoSim()
             sims = ss.get_sim()
-            log = open("log"+str(rank),'w')
+            #log = open("log"+str(rank),'w')
             ss.run_sim(sims[i])
-            log.flush()
-            log.close()
+            #log.flush()
+            #log.close()
         #counter += 1
 
             print rank

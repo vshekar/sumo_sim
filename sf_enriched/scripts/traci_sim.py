@@ -99,17 +99,18 @@ class SumoSim():
                 for sl in disrupted_sublinks:
                     for i in range(sl.num_lanes):
                         traci.lane.setAllowed(str(link_disrupted)+ "_" + str(sl.sublink) + "_" + str(i),[])
-
-
-	    elif step > end_disruption:
-                for vehicle in stopped_vehicles:
+		
+	    	for vehicle in stopped_vehicles:
 		    try:
                         traci.route.add(str(vehicle[0]), [vehicle[1], vehicle[2]])
                         traci.vehicle.add(str(vehicle[0]),str(vehicle[0]), typeID="reroutingType")
                     except:
                         print("Stopped vehicle cannot be added")
                         pass
-            
+	        stopped_vehicles = [] 
+
+	    #elif step > end_disruption:
+                          
             #Data collection code
             if begin_delta < step <= end_delta:
                 for sublink, link in self.all_sublinks:
