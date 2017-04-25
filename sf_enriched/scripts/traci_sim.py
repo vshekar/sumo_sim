@@ -14,25 +14,30 @@ from collections import deque
 
 
 class SumoSim():
-    
+    """
     tree = ET.parse('../trips/trip.xml')
     trips = tree.getroot()
     all_trips = []
     for t in trips:
         all_trips.append((t.attrib['id'],t.attrib['depart'],t.attrib['from'],t.attrib['to']))
     all_trips = deque(all_trips)
-
+    """
 
 
     SUMOBIN = "sumo"
 
-    SUMOCMD = [SUMOBIN, "-c", "../config/config_with_TLS.sumocfg", "--ignore-route-errors", "true", "-W", "true", "--time-to-teleport", "3600"]
-    ENGINE = create_engine('sqlite:///test.db', connect_args={'timeout':15})
+    SUMOCMD = [SUMOBIN, "-c", "../config/config_with_TLS.sumocfg", "--ignore-route-errors", "true", "-W", "true", "--time-to-teleport", "300"]
+    #SUMOCMD = [SUMOBIN, "-c", "../config/config_with_TLS.sumocfg", "--ignore-route-errors", "true", "--time-to-teleport", "300"]
+    def __init__(self, rank):
+        self.rank = rank
+        #copyfile('test.db','proc{}.db'.format(rank))
+        ENGINE = create_engine('sqlite:///proc{}.db'.format(rank), connect_args={'timeout':15})
+        Base.metadata.bind = ENGINE
+        self.DBSession = sessionmaker(bind=ENGINE)
+        self.SESSION = self.DBSession()
+        self.all_sublinks = self.SESSION.query(SubLinks, Links).filter(SubLinks.link == Links.link_id).all()
 
-    Base.metadata.bind = ENGINE
-    DBSession = sessionmaker(bind=ENGINE)
-    SESSION = DBSession()
-    all_sublinks = SESSION.query(SubLinks, Links).filter(SubLinks.link == Links.link_id).all()
+
 
     #print(all_sublinks)
 
@@ -52,10 +57,10 @@ class SumoSim():
         sim_id = sim.sim_id
         link_disrupted = sim.link
         if link_disrupted != None:
-            disrupted_sublinks = self.SESSION.query(SubLinks).filter(SubLinks.link == Links.link_id).filter(Links.link == link_disrupted).all()
+            disrupted_sublinks = self.SESSION.query(SubLinks, Links).filter(SubLinks.link == Links.link_id).filter(Links.link_id == link_disrupted).all()
             sl = []
-            for subl in disrupted_sublinks:
-                sl.append(str(link_disrupted)+ "_" + str(subl.sublink))
+            for subl, lnk in disrupted_sublinks:
+                sl.append(str(lnk.link)+ "_" + str(subl.sublink))
             
 
 
@@ -73,7 +78,8 @@ class SumoSim():
         while step < 86400:
             traci.simulationStep()
             step += 1
-
+            
+            """
             #Add vehicle code
             vehicles = self.get_vehicles(step)
             for vehicle in vehicles:
@@ -87,30 +93,31 @@ class SumoSim():
                         print(vehicle[2].split('_')[0], vehicle[3].split('_')[0], str(link_disrupted))
                         pass
                 vehicle_number +=1
-
+            """
             #Disruption code
             if start_disruption == step:
-                for sl in disrupted_sublinks:
+                for sl, lnk in disrupted_sublinks:
                     for i in range(sl.num_lanes):
-                        traci.lane.setDisallowed(str(link_disrupted)+ "_" + str(sl.sublink) + "_" + str(i),['passenger'])
-                print("Add disruption here!")
+                        traci.lane.setDisallowed(str(lnk.link)+ "_" + str(sl.sublink) + "_" + str(i),['passenger'])
+                print("Add disruption here! Link : {}".format(link_disrupted))
             elif end_disruption == step:
                 print("Remove disruption here!")
-                for sl in disrupted_sublinks:
+                for sl, lnk in disrupted_sublinks:
                     for i in range(sl.num_lanes):
-                        traci.lane.setAllowed(str(link_disrupted)+ "_" + str(sl.sublink) + "_" + str(i),[])
-		
-	    	for vehicle in stopped_vehicles:
-		    try:
+                        traci.lane.setAllowed(str(lnk.link)+ "_" + str(sl.sublink) + "_" + str(i),['passenger'])
+        
+            """
+            for vehicle in stopped_vehicles:
+                    try:
                         traci.route.add(str(vehicle[0]), [vehicle[1], vehicle[2]])
                         traci.vehicle.add(str(vehicle[0]),str(vehicle[0]), typeID="reroutingType")
                     except:
                         print("Stopped vehicle cannot be added")
                         pass
-	        stopped_vehicles = [] 
-
-	    #elif step > end_disruption:
-                          
+            stopped_vehicles = [] 
+            """
+        #elif step > end_disruption:
+                        
             #Data collection code
             if begin_delta < step <= end_delta:
                 for sublink, link in self.all_sublinks:
@@ -129,6 +136,7 @@ class SumoSim():
                     avg_density = defaultdict(float)
                     cumu_CO2 = defaultdict(float)
                     cumu_NOx = defaultdict(float)
+                    cumu_fuel = defaultdict(float)
 
             
         traci.close()
@@ -175,5 +183,6 @@ class SumoSim():
 
 if __name__ == "__main__":
     ss = SumoSim()
-    ss.setup_sim(0,3)
+    ss.setup_sim(769,770)
     
+

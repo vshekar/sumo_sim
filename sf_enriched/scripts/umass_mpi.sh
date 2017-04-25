@@ -3,7 +3,7 @@
 #BSUB -J sumo_sim
 #BSUB -n 73
 #BSUB -q long
-#BSUB -W 720
+#BSUB -W 2880
 #BSUB -e %J.err
 #BSUB -R rusage[mem=1024]
 

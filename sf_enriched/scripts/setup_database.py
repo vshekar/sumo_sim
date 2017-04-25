@@ -68,3 +68,7 @@ if __name__=="__main__":
     print("start")
     engine = create_engine("sqlite:///test.db", echo=True)
     Base.metadata.create_all(engine)
+
+def create_db(num):
+    engine = create_engine("sqlite:///test{}.db".format(num), echo=True)
+    Base.metadata.create_all(engine)

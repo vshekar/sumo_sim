@@ -9,10 +9,11 @@ root = tree.getroot()
 for vehicle in root:
 	for route in vehicle:
 		rt = route.attrib['edges'].split()
-		l = int(len(rt)/2)
+		l = int(0.75*len(rt))
 		if l >1:
-			start = math.ceil(l/2)
-			end = -1 * math.floor(l/2)
+			#start = math.ceil(l/2)
+			start = 0
+			end = int(-1 * math.floor(l))
 			route.attrib['edges'] = ' '.join(rt[start:end])
 
 
