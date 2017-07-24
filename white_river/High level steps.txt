@@ -1,0 +1,37 @@
+1) Access scenarios from : https://gis.wim.usgs.gov/arcgis/rest/services/FIMMapper
+
+2) Download arcgis shape files for the required scenarios
+
+3) In QGIS use the boundary shapefile to download the corresponding open street map
+
+4) Add inundation layer on top of OSM and calculate the intersection between the two layers
+
+5) Extract the link names from the dbf created from the intersection. TODO: Automate link extraction
+
+6) Save the inundation levels in text files
+
+7) Sumo Simulation Algorithm:
+	1) While all vehicles have not exited the simulation
+		- Simulate step
+		- if warning time has passed
+			Run evacuation strategy
+		- else
+			Run normal traffic
+
+		- if flood event has started
+			Close inundated links
+
+
+Simulation matrix:
+
+Time of Day :	Peak		Off Peak		Night
+Time of Evac:	12 hours	6 hours			2 hours
+Evac Priority:	Low lying 1st	Farthest from staging	Closest to Hazard
+Topolgy:	Oneway -> 2 way	Oneway towards dest.	Base case
+Decision:	Evac Rate	# of people evac	Lives saved	Clearance time
+
+
+Evacuation Strategy:
+Departure time modeling	 = Decision time delay + Preperation time delay
+Descision time delay	 = Constant based on warning time
+Preperation time	 = Random variable based on some distribution (Rayliegh)

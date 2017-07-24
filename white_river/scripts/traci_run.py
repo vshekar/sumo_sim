@@ -2,6 +2,7 @@ import traci
 import traci.constants as tc
 import sumolib
 
+
 class SumoSim():
     SUMOBIN = "sumo-gui"
     SUMOCMD = [SUMOBIN, "-c", "../config/config.sumocfg", "--ignore-route-errors", "true", "-W", "true", "--time-to-teleport", "-1"]
