@@ -42,7 +42,7 @@ class SumoSim():
                 if l in edge.getID():
                     self.disabled_edges.append(edge)
                     for lane in edge.getLanes():
-                        traci.lane.setDisallowed(lane.getID(),['passenger'])
+                        traci.lane.setDisallowed(lane.getID(),['passenger', 'reroutingType'])
                         
     def reenable_links(self):
         for edge in self.disabled_edges:
