@@ -14,13 +14,13 @@ import xml.etree.ElementTree as ET
 import population
 
 class SumoSim():
-    SUMOBIN = "sumo-gui"
+    SUMOBIN = "sumo"
     SUMOCMD = [SUMOBIN, "-c", "../config/config.sumocfg", 
                "--ignore-route-errors", "true", "-W", "true", 
                "--time-to-teleport", "-1"]
 
     
-    def __init__(self):
+    def __init__(self, event_start=12, warning_time=10, inundation_rate=1 ):
         #Initialize simulation
         self.flood_files = ['../Flood intersections/flood1.txt', 
                             '../Flood intersections/flood2.txt', 
@@ -31,12 +31,14 @@ class SumoSim():
         self.network = sumolib.net.readNet('../wr_selected_new.net.xml')
         self.edges = self.network.getEdges()
         traci.start(self.SUMOCMD)
-        self.event_start = 3600*14 #Time at which event starts
-        self.warning_time = 3600*13 #Warning at time=x
+        self.event_start = 3600*event_start #Time at which event starts
+        self.warning_time = 3600*warning_time #Warning at time=x
+        self.inundation_rate = 3600*inundation_rate
         
         #Simulation stopping conditions
         self.arrived = 0
         self.departed = 0
+        self.simulation_running = True
         
         self.curr_trip = 0
         self.curr_veh = 0
@@ -48,7 +50,7 @@ class SumoSim():
         self.step = 0 #Keeps track of current sim time
         self.trips = self.get_trips()
         self.run_sim()
-        self.end_simulation()
+        #self.end_simulation()
         
     def get_trips(self):
         result = []
@@ -61,14 +63,14 @@ class SumoSim():
         
     def run_sim(self):
         #while self.arrived < self.total_vehicles:
-        self.evac_roads = list(reversed(self.get_evac_roads('staging')))
+        self.evac_roads = list(self.get_evac_roads('staging'))
         #print(self.evac_roads)
         self.current_stage = 0
-        while self.step < 24*3600:
+        #while self.step < 24*3600:
+        while self.simulation_running:
             traci.simulationStep()
             self.step += 1
-            self.arrived += traci.simulation.getArrivedNumber()
-            self.departed += traci.simulation.getDepartedNumber()
+            
             #Evacuation or normal?
             if self.step >= self.warning_time:
                 if self.step == self.warning_time + 500*(1+self.current_stage):
@@ -84,6 +86,8 @@ class SumoSim():
                 
     def evac_strat(self):
         if self.current_stage < len(self.evac_roads):
+            self.arrived += traci.simulation.getArrivedNumber()
+            self.departed += traci.simulation.getDepartedNumber()
             
             edges = self.evac_roads[self.current_stage]
             for edge in edges:
@@ -102,8 +106,14 @@ class SumoSim():
     
     
     def end_simulation(self):
+        print('Warning Time : {}'.format(self.warning_time/3600))
+        print('Event Time : {}'.format(self.event_start/3600))
+        print('Simulation End: {}'.format(self.step/3600))
+        print('Departed = {}'.format(self.departed))
         print('Departed - Arrived = {}'.format(self.departed - self.arrived))
+        
         traci.close()
+        self.simulation_running = False
     
     def normal_traffic(self):
         if self.gen_traffic():
@@ -112,22 +122,22 @@ class SumoSim():
             trip = random.choice(self.trips)
             traci.route.add(str(self.curr_trip), [trip[0], trip[1]])
             try:
-                traci.vehicle.add(str(self.curr_trip)+"veh", str(self.curr_trip), 
-                              typeID="reroutingType")
+                traci.vehicle.add(str(self.curr_trip)+"veh", 
+                                  str(self.curr_trip), typeID="reroutingType")
             except:
                 print(trip)
     
     
     def inundate(self):
-        if self.step%(3600*2) == 0:
+        if self.step%(self.inundation_rate) == 0:
                 self.disable_links(self.file_count)
                 self.file_count += 1
-                
                 #Reroute every vehicle in the simulation
                 for edge in self.edges:
                         vehIDs = traci.edge.getLastStepVehicleIDs(edge.getID())
                         for id in vehIDs:
-                            traci.vehicle.rerouteTraveltime(id, currentTravelTimes=True)
+                            traci.vehicle.rerouteTraveltime(id,
+                                                    currentTravelTimes=True)
                 
     def disable_links(self, count=0):
         f = open(self.flood_files[count],'r')
@@ -166,6 +176,12 @@ class SumoSim():
                     stage.append(e)
             if len(stage) > 0:
                 evac_roads.append(stage)
+                
+        if strat == 'staging':
+            evac_roads = reversed(evac_roads)
+        elif strat == 'river':
+            evac_roads = evac_roads
+        
         return evac_roads
             
     def gen_traffic(self):
@@ -207,5 +223,6 @@ class SumoSim():
         
     
 if __name__=="__main__":
-    s = SumoSim()
-            
+    s = SumoSim(event_start=2, warning_time=0, inundation_rate=1)
+    s = SumoSim(event_start=4, warning_time=0, inundation_rate=1)
+    s = SumoSim(event_start=6, warning_time=0, inundation_rate=1)
