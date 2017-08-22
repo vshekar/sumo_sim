@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 import xml.etree.ElementTree as ET
 
-list_file = os.listdir("./output")
+list_file = os.listdir("../output")
 
 if __name__=='__main__':
     G = nx.DiGraph()
@@ -19,12 +19,12 @@ if __name__=='__main__':
 
     for fn in list_file:
         if fn == 'edgeData.xml':
-            tree = ET.parse('./output/'+fn)
+            tree = ET.parse('../output/'+fn)
             root = tree.getroot()
             for i,interval in enumerate(root):
                 for edge in interval:
                     if (edge.attrib['id'] != '-1to0' and edge.attrib['id'] != '5to-5') and ('density' in edge.attrib.keys()):
-                        print edge.attrib['id'] +  " : " + edge.attrib['density']
+                        print(edge.attrib['id'] +  " : " + edge.attrib['density'])
                         densities[i][edge.attrib['id']] = float(edge.attrib['density'])
                         
     t1_colors = [0.0 for i in range(len(edges))]
@@ -55,13 +55,13 @@ if __name__=='__main__':
     A.edge_attr['style']='setlinewidth(2)'
     
     for i,node in enumerate(A.nodes()):
-        print pos[i]
+        print(pos[i])
         node.attr['pos'] = "%f,%f"%(pos[i][0],pos[i][1])
     
-    print A.node_attr
+    print(A.node_attr)
     A.layout()
     A.draw("op.pdf")
 
     #plt.draw()
     #plt.show()
-    print "Done"
+    print("Done")

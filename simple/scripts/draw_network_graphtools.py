@@ -48,10 +48,10 @@ if __name__=='__main__':
             tree = ET.parse('./output/'+fn)
             root = tree.getroot()
             for i,interval in enumerate(root):
-                print i
+                print(i)
                 for edge in interval:
                     if (edge.attrib['id'] != '-1to0' and edge.attrib['id'] != '5to-5') and ('density' in edge.attrib.keys()):
-                        print edge.attrib['id'] +  " : " + edge.attrib['density']
+                        print(edge.attrib['id'] +  " : " + edge.attrib['density'])
                         densities[i][edge.attrib['id']] = float(edge.attrib['density'])
     
     t1_colors = [1.0 for i in range(len(edges))]
@@ -68,9 +68,9 @@ if __name__=='__main__':
             
             #max_den = densities[i][max(densities[i])]
             max_den = densities[i][max(densities[i], key=densities[i].get)]
-            print "max_den = " + str(max_den)
+            print("max_den = " + str(max_den))
             RGB_list = color_convert(max_den)
-            print len(RGB_list)
+            print(len(RGB_list))
             if str(edge[0])+'to'+str(edge[1]) in densities[i].keys():
                 eprop_thickness[i][e] = densities[i][str(edge[0])+'to'+str(edge[1])]
                 if eprop_thickness[i][e] > 15.0:
@@ -80,7 +80,7 @@ if __name__=='__main__':
 
                 eprop_text[i][e] = str(densities[i][str(edge[0])+'to'+str(edge[1])])
                 #eprop_color[i][e] = color_convert(densities[i][str(edge[0])+'to'+str(edge[1])],max_den)
-                print (densities[i][str(edge[0])+'to'+str(edge[1])])
+                print(densities[i][str(edge[0])+'to'+str(edge[1])])
                 val = densities[i][str(edge[0])+'to'+str(edge[1])]/max_den
                 if 1.0 >= val and val >0.75:
                     color = 3
@@ -91,7 +91,7 @@ if __name__=='__main__':
                 else:
                     color = 0
                 eprop_color[i][e] = RGB_list[color]
-                print RGB_list[color]
+                print(RGB_list[color])
             else:
                 eprop_thickness[i][e] = 1.0
                 eprop_text[i][e] = '0.0'

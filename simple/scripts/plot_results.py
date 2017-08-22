@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 #from natsort import natsorted
 
-#list_file = os.listdir("./output")
+list_file = os.listdir("../output")
 sns.set(style="white", context="talk")
 
 
@@ -22,7 +22,7 @@ def table():
     for fn in sorted(list_file):
         if 'summary' in  fn:
             #print fn
-            tree = ET.parse('./output/'+fn)
+            tree = ET.parse('../output/'+fn)
             root = tree.getroot()
             
             print(fn + "\t" + "\t"  + root[-1].attrib['time'] + "\t" + root[-1].attrib['meanTravelTime'])
@@ -43,7 +43,8 @@ def table():
                     interval_str = '$\Delta t3$'
                 names.append(name[0][0]+' to '+name[0][-1] + "\n" + interval_str)
                 results[name[0][0]+' to '+name[0][-1] + "\n" + interval_str] = [float(root[-1].attrib['time']),float(root[-1].attrib['meanTravelTime'])]
-                link_name.append(name[0][0]+' to '+name[0][-1])
+                #link_name.append(name[0][0]+' to '+name[0][-1])
+                link_name.append('('+ name[0][0]+', '+name[0][-1] + ')')
                 time_interval.append(interval_str)
                 sim_times.append(float(root[-1].attrib['time']))
                 
@@ -85,7 +86,8 @@ def plot(results):
     #ax1.grid(True, which='minor', color='b', linestyle='-')
     #ax1.grid(True)
     #sns.barplot(names,mean_TTs,palette="Set3",ax=ax2)
-    sns.barplot(x='Link',y='time',hue='Interval',data=results,hue_order=['$\Delta t1$','$\Delta t2$','$\Delta t3$'],palette="muted")
+    
+    sns.barplot(x='Link',y='time',hue='Interval',data=results,hue_order=['$\Delta t1$','$\Delta t2$','$\Delta t3$'], palette=sns.light_palette("gray", reverse=True))
     ax2.set_ylabel('Simulation Time/Nominal Time')
     ax2.set_xlabel('Disabled Link')
     ax2.grid(True)
@@ -103,7 +105,7 @@ def plot(results):
     plt.show()
 
 def plot_pollution(data):
-    print len(data[0])
+    print(len(data[0]))
     #data = data[0]
     filenames = ['Nominal','$l_{2,4}$ at $\delta t_1$','$l_{2,4}$ at $\delta t_2$','$l_{2,4}$ at $\delta t_3$']
     styles = ['solid','dashed','dotted','dashdot']
@@ -142,7 +144,7 @@ def extract_pollution(filenames):
                     #row = {'Time Step':float(interval.attrib['begin']),'Pollution Amount':prev_total,'Case':filename}
                     time.append(float(interval.attrib['begin']))
                     poll.append(prev_total)
-        print filename + " : " + str(poll[-1])
+        print(filename + " : " + str(poll[-1]))
         cumul_pollution.append([time,poll])
                     #rows.append(row)
     
@@ -161,7 +163,7 @@ def plot_num_veh(filenames):
         for i,step in enumerate(root):
             num_veh.append(int(step.attrib['running']))
         
-        print labels[f] + " : " + str(np.trapz(num_veh))
+        print(labels[f] + " : " + str(np.trapz(num_veh)))
         plt.plot(num_veh,label=labels[f],linestyle=styles[f])
     plt.legend(bbox_to_anchor=(.75, 1), loc=2, borderaxespad=0.)
     ax2.set_ylabel('Number of vehicles in the network')
@@ -189,8 +191,8 @@ filenames = ['../output/summary.xml','../output/summary_2to4__0_500.xml','../out
 #filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
 
 #plot_pollution(extract_pollution(filenames))
-#plot(table())
-plot_num_veh(filenames)
+plot(table())
+#plot_num_veh(filenames)
 #for filename in filenames:
 #    print filename
 #    plot_dist(filename)
