@@ -3,7 +3,7 @@ from graph_tool.all import *
 
 def parse_weights():
     #fn = './output/edgeData.xml'
-    fn = './output/edgeData_--12814#1__6000_9000.xml'
+    fn = './output/edgeData_--12814#1__3000_6000.xml'
     tree = ET.parse(fn)
     root = tree.getroot()
     densities = [{} for i in range(4)]
@@ -14,7 +14,7 @@ def parse_weights():
             if 'density' in edge.attrib.keys():
                 densities[i][edge.attrib['id']] = float(edge.attrib['density'])
             else:
-                densities[i][edge.attrib['id']] = 1.0
+                densities[i][edge.attrib['id']] = 0.0
     return densities
 
 
@@ -31,6 +31,7 @@ def gen_graph():
     e_weight = [g.new_edge_property("double") for i in range(len(den))]
     e_color = [g.new_edge_property("vector<double>") for i in range(len(den))]
     e_label = [g.new_edge_property("string") for i in range(len(den))]
+    e_dash = [g.new_edge_property("vector<double>") for i in range(len(den))]
     for x,densities in enumerate(den):
         #print x
         fn = './network/umassd.net.xml'
@@ -51,7 +52,10 @@ def gen_graph():
                 for i,pos in enumerate(pos_list):
                     pos = pos.split(',')
                     v = g.add_vertex()
-                    v_pos[v] = [float(pos[1]),float(pos[0])]
+                    if edge_id[:2] == '--':
+                        v_pos[v] = [float(pos[1]),float(pos[0])]
+                    else:
+                        v_pos[v] = [float(pos[1]),float(pos[0])]
                     if i == 0:
                         v_size[v] = 1.0
                         v_name[v] = start_node
@@ -66,13 +70,15 @@ def gen_graph():
                         prev_vertex = v
                         e_marker[e] = 0.0
                         e_name[e] = edge_id
-                        if edge_id in densities.keys() and "12814" in el.attrib['id']:
-                            e_weight[x][e] = densities[edge_id]*0.1
+                        #if edge_id in densities.keys() and "12814" in el.attrib['id']:
+                        if edge_id in densities.keys():
+                            e_weight[x][e] = densities[edge_id]*0.2
                         else:
-                            e_weight[x][e] = 1.0
+                            e_weight[x][e] = 0.0
         
         max_wt = max(e_weight[x])*10
-        RGB_list = [[0.0,1.0,0.0,1.0],[1.0,1.0,0.0,1.0],[1.0,0.5,0.0,1.0],[1.0,0.0,0.0,1.0]]
+        #RGB_list = [[0.0,1.0,0.0,1.0],[1.0,1.0,0.0,1.0],[1.0,0.5,0.0,1.0],[1.0,0.0,0.0,1.0]]
+	RGB_list = [[0.0,0.0,0.0,1.0], [0.25, 0.25, 0.25, 1.0], [0.5, 0.5, 0.5, 1.0], [0.75, 0.75, 0.75, 1.0]]
         #for i,wt in enumerate(e_weight):
         prev_wt = 1.0
         counter = 0
@@ -88,22 +94,32 @@ def gen_graph():
                 
             prev_wt = wt 
             
-            if wt == 1.0:
+            if wt == 0.0:
                 e_color[x][edge] = RGB_list[0]
+                e_dash[x][edge] = [5, 25, 0.0]
+                e_weight[x][edge] = 1.0
             else:
                 val = wt*10/max_wt
                 if 1.0 >= val and val >0.75:
-                    color = 3
+                    color = 0
+                    e_dash[x][edge] = [1.0, 0.0, 0.0]
                 elif 0.75>= val and val > 0.5:
-                    color = 2
-                elif 0.5 >= val and val >= 0.25:
                     color = 1
+                    e_dash[x][edge] = [1.0, 0.0, 0.0]
+                elif 0.5 >= val and val > 0.25:
+                    color = 2
+                    e_dash[x][edge] = [1.0, 0.0, 0.0]
+                elif 0.25 >= val and val > 0:
+                    color = 3
+                    e_dash[x][edge] = [1.0, 0.0, 0.0]
                 else:
                     color = 0
+                    e_dash[x][edge] = [5, 25, 0.0]
                 #print color
                 e_color[x][edge] = RGB_list[color]
                 
     for i in range(4):
-        graph_draw(g,pos=v_pos,vertex_size=v_size,edge_end_marker=e_marker,edge_pen_width=e_weight[i],fit_view=True,output_size=(800,800),edge_color=e_color[i],edge_text=e_label[i],edge_font_size=3,edge_text_distance=10,output='umassd_S1_t3_'+str(i)+'.pdf')
+	graph_draw(g, pos=v_pos, vertex_size=v_size, edge_end_marker=e_marker, edge_pen_width=e_weight[i], fit_view=True, output_size=(800,800), edge_color=e_color[i], edge_dash_style=e_dash[i], output='umassd_S1_t2_'+str(i)+'.pdf')
+        #graph_draw(g,pos=v_pos,vertex_size=v_size,edge_end_marker=e_marker,edge_pen_width=e_weight[i],fit_view=True,output_size=(800,800),edge_color=e_color[i],edge_text=e_label[i],edge_font_size=3,edge_text_distance=10,output='umassd_S1_t2_'+str(i)+'.pdf')
         #graph_draw(g,pos=v_pos,vertex_size=v_size,edge_end_marker=e_marker,edge_pen_width=e_weight[i],fit_view=True,output_size=(800,800),edge_color=e_color[i],edge_text=e_label[i],edge_font_size=3,edge_text_distance=10,output='umassd_nominal_'+str(i)+'.pdf')
 gen_graph()
