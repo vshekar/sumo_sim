@@ -5,6 +5,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import statsmodels.api as sm
+import pylab
+import scipy
+
 #from natsort import natsorted
 
 list_file = os.listdir("../output")
@@ -182,19 +186,20 @@ def plot_dist(filename):
     for i,tripinfo in enumerate(root):
     	travel_times.append(float(tripinfo.attrib['duration']))
     #sns.distplot(travel_times, hist=False, rug=True)
-    ax2.hist(travel_times, 50)
+    #ax2.hist(travel_times, 50)
+    sm.qqplot(np.asarray(travel_times), line='45', dist=scipy.stats.distributions.norm)
     plt.savefig(filename+'.pdf', bbox_inches='tight', pad_inches=0.05)
 
     
 #filenames = ['../output/edgeData.xml','../output/edgeData_2to4__0_500.xml','../output/edgeData_2to4__500_1000.xml','../output/edgeData_2to4__1000_1500.xml']
-filenames = ['../output/summary.xml','../output/summary_2to4__0_500.xml','../output/summary_2to4__500_1000.xml','../output/summary_2to4__1000_1500.xml']
-#filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
+#filenames = ['../output/summary.xml','../output/summary_2to4__0_500.xml','../output/summary_2to4__500_1000.xml','../output/summary_2to4__1000_1500.xml']
+filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
 
 #plot_pollution(extract_pollution(filenames))
-plot(table())
+#plot(table())
 #plot_num_veh(filenames)
-#for filename in filenames:
-#    print filename
-#    plot_dist(filename)
+for filename in filenames:
+    print(filename)
+    plot_dist(filename)
 
     

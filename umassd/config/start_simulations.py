@@ -36,7 +36,7 @@ def generate_additional(edge,G,interval,intervals,suffix):
             reroute_edges += e
         else:
             reroute_edges += " " + e
-	"""
+    """
     for ed in G.edges_iter():
         if G[ed[0]][ed[1]]['name'] == edge:
             #print "Found it!"
@@ -45,7 +45,7 @@ def generate_additional(edge,G,interval,intervals,suffix):
                     reroute_edges += str(e[0])+ 'to' + str(e[1])
                 else:
                     reroute_edges += " " + str(e[0])+ 'to' + str(e[1])
-	"""
+    """
 	
     lines = ('<additional>\n'
                             '<taz id="source">\n'
@@ -83,7 +83,10 @@ def start(G):
     intervals = [(0,3000),(3000,6000),(6000,9000)]
     for edge in vul_edges.items():
         for interval in intervals:
-            suffix = '_' + edge[0] + '__' +str(interval[0]) + '_' +str(interval[1])
+            if edge[0][:2] == '--':
+                suffix = '_' + edge[0][2:] + '__' +str(interval[0]) + '_' +str(interval[1])
+            else:
+                suffix = '_' + edge[0] + '__' +str(interval[0]) + '_' +str(interval[1])
             generate_config(edge,interval,suffix)
             generate_additional(edge,G,interval,intervals,suffix)
             #print suffix +'\n'
@@ -99,4 +102,4 @@ if __name__=='__main__':
     for edge in edges:
         G[edge[0]][edge[1]]['name'] = str(edge[0])+'to'+str(edge[1])
     start(G)
-    print "Done"
+    print("Done")

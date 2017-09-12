@@ -25,7 +25,7 @@ def figure():
         if "summary" in fn:
         #if fn == 'summary_S0.xml' or fn == 'summary_S1.xml':
         
-            print fn
+            print(fn)
             tree = ET.parse('./output/'+fn)
             root = tree.getroot()
             x = []
@@ -39,9 +39,9 @@ def figure():
             line, = plt.plot(x,y,label=fn[8:-4])
             graphs.append(line)
                     #print len(x)
-    print len(graphs)
+    print(len(graphs))
     #plt.plot(graphs[0][0],graphs[0][1],graphs[1][0],graphs[1][1])
-    lines = []
+    #lines = []
     #for graph in graphs:
     #    line, = plt.plot(graph[0],graph[1],label=fn[8:-4])
     #    lines.append(line)

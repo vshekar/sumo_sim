@@ -28,6 +28,6 @@ def start():
                 log.close()
             counter += 1
 
-    print rank
+    print(rank)
 
 start()
