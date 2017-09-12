@@ -43,6 +43,8 @@ class SumoSim():
         traci.close()
         
     def reroute(self):
+        print("Rerouting:")
+        print(traci.edge.getParameter(self.disabled_link, 'CMD_CLOSE'))
         veh_ids = []                    
         for edge in self.edges:
             veh_ids = traci.edge.getLastStepVehicleIDs(edge.getID()) + veh_ids
@@ -79,7 +81,8 @@ class SumoSim():
         
                 if (self.end_interval!=None and self.end_interval == self.step):
                     for lane in self.disabled_lanes:
-                        traci.lane.setDisallowed(lane.getID(),[])
+                        traci.lane.setAllowed(lane.getID(),['passenger'])
+                        #traci.lane.setDisallowed(lane.getID(),[])
                         #traci.lane.setMaxSpeed(lane.getID(),13.4112)
                     self.reroute()
                 
@@ -114,7 +117,7 @@ if __name__=="__main__":
     #op.loc[count] = ['Nominal', 'None', s.step]
     #count += 1
     for l in links.keys():
-        s = SumoSim(0, 3000, links[l])
+        s = SumoSim(10, 3000, links[l])
         op.loc[count] = [l, '$\Delta t_1$', s.step]
         count += 1
         s = SumoSim(3000, 6000, links[l])
