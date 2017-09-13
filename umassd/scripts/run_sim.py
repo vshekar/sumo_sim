@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 class SumoSim():
-    SUMOBIN = "sumo-gui"
+    SUMOBIN = "sumo"
     SUMOCMD = [SUMOBIN, "-c", "../config/config.sumocfg", "--ignore-route-errors", "true", "-W", "true", "--time-to-teleport", "-1"]
 
 
@@ -35,7 +35,8 @@ class SumoSim():
             traci.edge.subscribe(edgeID, varIDs=(96,101,16))
             #if self.disabled_link == :
         
-        edge = self.network.getEdge(self.disabled_link)    
+        if self.disabled_link != None:
+            edge = self.network.getEdge(self.disabled_link)    
         for lane in edge.getLanes():
             self.disabled_lanes.append(lane)
         
@@ -106,16 +107,16 @@ if __name__=="__main__":
     #s = SumoSim(0, 3000, '--12814#1')
     #s = SumoSim(3000, 6000, '--12814#1')
     #s = SumoSim(6000, 9000, '--12814#1')
-    #links = {'S1':'--12814#1', 'S2':'--12814#2', 'S3':'--12814#3', 
-    #         'S4':'--12814#4', 'S5':'--12814#6', 'S6':'--12814#7',
-    #         'S7':'--12814#9', 'S8':'--12814#10', 'S9':'-12814#13',
-    #         'S10':'-12814#14', 'S11':'-12814#15', 'S12':'-12814#16'}
-    links = {'S7':'--12814#9'}
+    links = {'S1':'--12814#1', 'S2':'--12814#2', 'S3':'--12814#3', 
+             'S4':'--12814#4', 'S5':'--12814#6', 'S6':'--12814#7',
+             'S7':'--12814#9', 'S8':'--12814#10', 'S9':'-12814#13',
+             'S10':'-12814#14', 'S11':'-12814#15', 'S12':'-12814#16'}
+    #links = {'S7':'--12814#9'}
     op = pd.DataFrame(columns=('Scenario', 'Delta', 'Travel Time'))
     count = 0
-    #s = SumoSim()
-    #op.loc[count] = ['Nominal', 'None', s.step]
-    #count += 1
+    s = SumoSim()
+    op.loc[count] = ['Nominal', 'None', s.step]
+    count += 1
     for l in links.keys():
         s = SumoSim(10, 3000, links[l])
         op.loc[count] = [l, '$\Delta t_1$', s.step]
