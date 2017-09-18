@@ -117,6 +117,7 @@ if __name__=="__main__":
     s = SumoSim()
     op.loc[count] = ['Nominal', 'None', s.step]
     count += 1
+    print(op)
     for l in links.keys():
         s = SumoSim(10, 3000, links[l])
         op.loc[count] = [l, '$\Delta t_1$', s.step]
@@ -127,4 +128,5 @@ if __name__=="__main__":
         s = SumoSim(6000, 9000, links[l])
         op.loc[count] = [l, '$\Delta t_3$', s.step]
         count += 1
+        print(op)
     op.to_csv('travel_times.csv', index=False)
