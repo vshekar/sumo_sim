@@ -30,7 +30,7 @@ class SumoSim():
         self.curr_vuls = [0.0,0.0,0.0]
         self.weights = [0,0,0]
         
-        it = 0
+        it = 1
         while self.stop_condition():
             #Initialize and subscribe to data from the simulation 
             print('Iteration {}'.format(it))
@@ -93,7 +93,7 @@ class SumoSim():
                 self.densities = defaultdict(float)
         
         if self.arrived == 500:
-            print("500 arrived!")
+            #print("500 arrived!")
             total_densities = 0
             total_tau_gamma = 0
             for gt in self.gt:
@@ -111,13 +111,15 @@ class SumoSim():
                 gt.calc_s_expected()
                 gt.calc_edge_cost()
                 self.weights[i] = gt.curr_tau
-                self.epsilon[i] = abs(gt.vulnerability[-1] - 
-                            gt.vulnerability[-2])
-                self.curr_vuls[i] = gt.vulnerability[-1]
+                self.epsilon[i] = abs(gt.curr_sys_vul - 
+                            gt.prev_sys_vul)
+                self.curr_vuls[i] = gt.curr_sys_vul
+                
                 gt.gamma.to_csv('gamma_v3_{}.csv'.format(i))
                 gt.rho.to_csv('rho_v3_{}.csv'.format(i))
                 gt.tau.to_csv('tau_v3_{}.csv'.format(i))
                 gt.densities.to_csv('densities_v3_{}.csv'.format(i))
+                gt.vulnerabilities.to_csv('vulnerability_v3_{}.csv'.format(i))
         
     def collect_num_veh(self):
         for edge in self.edges:
@@ -138,21 +140,24 @@ class GT():
         self.gamma = pd.DataFrame()
         self.rho = pd.DataFrame()
         self.densities = pd.DataFrame()
+        self.vulnerabilities = pd.DataFrame()
         
-        self.vulnerability = [0]
+        self.vulnerability = {}
         
         self.curr_rho = {}
         self.curr_gamma = {}
         self.curr_tau = {}
+        self.curr_sys_vul = 0
+        self.prev_sys_vul = 0
         
         self.iteration = 0
         
-        self.beta = 1.0
-        self.alpha = 1.0
+        self.beta = 1.0/2.0
+        self.alpha = 1.0/2.0
         
         for edge in self.edges:
             edgeID = edge.getID()
-            self.curr_rho[edgeID] = 1/len(self.edges)
+            self.curr_rho[edgeID] = 1/len(3*self.edges)
             self.curr_gamma[edgeID] = 0
             self.curr_tau[edgeID] = edge.getLength()/edge.getSpeed()
             
@@ -168,12 +173,19 @@ class GT():
         self.prev_gamma = self.curr_gamma
         self.prev_tau = self.curr_tau
         
+        self.curr_rho = {}
+        self.curr_gamma = {}
+        self.curr_tau = {}
+        
+        
         #print(self.prev_gamma)
         self.gamma = self.gamma.append(self.prev_gamma, ignore_index=True)
         self.rho = self.rho.append(self.prev_rho, ignore_index=True)
         self.tau = self.tau.append(self.prev_tau, ignore_index=True)
         self.densities = self.densities.append(self.avg_density, 
                                                ignore_index=True)
+        self.vulnerabilities = self.vulnerabilities.append(self.vulnerability, ignore_index=True)
+        self.prev_sys_vul = self.curr_sys_vul
         
         #if self.interval == 1:
         #self.gamma.to_csv('gamma_v3_{}.csv'.format(self.interval))
@@ -227,14 +239,17 @@ class GT():
                          self.curr_gamma[edgeID])/ self.tau_gamma_prod)
             
     def calc_sys_vul(self):
-        vul = 0
+        sys_vul = 0
         for edge in self.edges:
             edgeID = edge.getID()
             #vul += (self.curr_rho[edgeID] * self.curr_gamma[edgeID] *
             #        self.prev_tau[edgeID])
-            vul += (self.curr_rho[edgeID] * self.curr_gamma[edgeID] *
-                    self.curr_tau[edgeID])
-        self.vulnerability.append(vul)
+            edge_vul = (self.prev_rho[edgeID] * self.prev_gamma[edgeID] *
+                    self.prev_tau[edgeID])
+            sys_vul += edge_vul
+            self.vulnerability[edgeID] = edge_vul
+        self.curr_sys_vul = sum(self.vulnerability.values())
+        #print(self.curr_sys_vul)
                                 
 if __name__ == "__main__":
     s = SumoSim()
