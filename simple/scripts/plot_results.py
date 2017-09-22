@@ -60,7 +60,8 @@ def table():
             #mergedlist.append(names[0])
             #mergedlist.extend(sorted(names[1:]))
     
-    sim_times = [x/fn_time for x in sim_times]
+    #sim_times = [x/fn_time for x in sim_times]
+    
     d = {'Link':link_name,'Interval':time_interval,'time':sim_times}
     df = pd.DataFrame(data=d)
     
@@ -193,13 +194,15 @@ def plot_dist(filename):
     
 #filenames = ['../output/edgeData.xml','../output/edgeData_2to4__0_500.xml','../output/edgeData_2to4__500_1000.xml','../output/edgeData_2to4__1000_1500.xml']
 #filenames = ['../output/summary.xml','../output/summary_2to4__0_500.xml','../output/summary_2to4__500_1000.xml','../output/summary_2to4__1000_1500.xml']
-filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
+#filenames = ['../output/tripinfo.xml','../output/tripinfo_2_to_4_0_500.xml','../output/tripinfo_2_to_4_500_1000.xml','../output/tripinfo_2_to_4_1000_1500.xml']
 
 #plot_pollution(extract_pollution(filenames))
 #plot(table())
 #plot_num_veh(filenames)
-for filename in filenames:
-    print(filename)
-    plot_dist(filename)
+#for filename in filenames:
+#    print(filename)
+#    plot_dist(filename)
+#print(table()[['Link', 'time']])
+table().to_csv('comparison.csv')
 
     

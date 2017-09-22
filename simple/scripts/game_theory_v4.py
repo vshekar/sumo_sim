@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 18 14:32:00 2017
 
-@author: Shekar
-"""
 
 
 import pandas as pd
@@ -12,12 +8,12 @@ import traci
 import sumolib
 #import xml.etree.ElementTree as ET
 from collections import defaultdict
+import scipy.stats
 
 class SumoSim():
     SUMOBIN = "sumo"
-    SUMOCMD = [SUMOBIN, "-c", "../config/config.cfg", "--ignore-route-errors",
-               "true", "-W", "true", "--time-to-teleport", "-1", 
-               "--weight-files", "../config/link_weights.xml", 
+    SUMOCMD = [SUMOBIN, "-c", "../config/config.cfg", "--time-to-teleport", "-1",
+               "--weight-files", "../config/link_weights.xml",
                "--weight-attribute", "traveltime"]
     
     def __init__(self):
@@ -39,7 +35,7 @@ class SumoSim():
             for edge in self.edges:
                 traci.edge.subscribe(edge.getID(), 
                                      varIDs=(16,96), begin=0, end=86400000)
-            self.run_sim()
+            self.run_sim(it)
             traci.close()
             epsilon = ["%.3f" % v for v in self.epsilon]
             print(epsilon)
@@ -49,8 +45,8 @@ class SumoSim():
             
     def stop_condition(self):
         result = True
-        if (abs(self.epsilon[0]) < 0.01 and 
-              abs(self.epsilon[1]) < 0.01 and abs(self.epsilon[2]) < 0.01):
+        if (abs(self.epsilon[0]) <= 0.01 and 
+              abs(self.epsilon[1]) <= 0.01 and abs(self.epsilon[2]) <= 0.01):
             result = False
         
         return result
@@ -63,14 +59,15 @@ class SumoSim():
                 traci.edge.adaptTraveltime(edgeID, 
                                            self.weights[interval][edgeID])
         
-    def run_sim(self):
+    def run_sim(self, iteration):
         self.arrived = 0
         self.step = 0
         self.delta = 500
         while self.arrived < 500:
-            vehIDs = traci.edge.getLastStepVehicleIDs('-1to0')
-            for id in vehIDs:
-                traci.vehicle.rerouteTraveltime(id, currentTravelTimes=False)
+            if iteration > 1:
+                vehIDs = traci.edge.getLastStepVehicleIDs('-1to0')
+                for id in vehIDs:
+                    traci.vehicle.rerouteTraveltime(id, currentTravelTimes=True)
             traci.simulationStep()
             self.step += 1
             self.arrived += traci.simulation.getArrivedNumber()
@@ -84,7 +81,8 @@ class SumoSim():
                 for edge in self.edges:
                     #veh/unit length over interval
                     self.densities[edge.getID()] /= self.delta 
-                self.weights[interval] = curr_gt.iterate(self.densities)
+                #self.weights[interval] = curr_gt.iterate(self.densities)
+                curr_gt.iterate(self.densities)
                 #curr_gt.iterate(self.densities)
                 #self.epsilon[interval] = abs(curr_gt.vulnerability[-1] 
                 #                            - curr_gt.vulnerability[-2])
@@ -107,9 +105,11 @@ class SumoSim():
             for i,gt in enumerate(self.gt):
                 gt.tau_gamma_prod = total_tau_gamma
                 gt.calc_rho()
-                gt.calc_sys_vul()
+                
                 gt.calc_s_expected()
                 gt.calc_edge_cost()
+                gt.calc_sys_vul()
+                
                 self.weights[i] = gt.curr_tau
                 self.epsilon[i] = abs(gt.curr_sys_vul - 
                             gt.prev_sys_vul)
@@ -152,8 +152,8 @@ class GT():
         
         self.iteration = 0
         
-        self.beta = 1.0/2.0
-        self.alpha = 1.0/2.0
+        self.beta = 1.0
+        self.alpha = 1.0
         
         for edge in self.edges:
             edgeID = edge.getID()
@@ -167,15 +167,13 @@ class GT():
         self.avg_density = avg_density
         self.total_density = sum(self.avg_density.values())
         self.iteration += 1
-        self.calc_sys_vul()
+        #self.calc_sys_vul()
         
         self.prev_rho = self.curr_rho
         self.prev_gamma = self.curr_gamma
         self.prev_tau = self.curr_tau
         
-        self.curr_rho = {}
-        self.curr_gamma = {}
-        self.curr_tau = {}
+
         
         
         #print(self.prev_gamma)
@@ -240,12 +238,15 @@ class GT():
             
     def calc_sys_vul(self):
         sys_vul = 0
+        #v = self.curr_rho['0to1'] * self.curr_gamma['0to1'] * self.curr_tau['0to1']
+        #print("{} * {} * {} = {}".format(self.curr_rho['0to1'], 
+        #      self.curr_gamma['0to1'], self.curr_tau['0to1'], v))
         for edge in self.edges:
             edgeID = edge.getID()
             #vul += (self.curr_rho[edgeID] * self.curr_gamma[edgeID] *
             #        self.prev_tau[edgeID])
-            edge_vul = (self.prev_rho[edgeID] * self.prev_gamma[edgeID] *
-                    self.prev_tau[edgeID])
+            edge_vul = (self.curr_rho[edgeID] * self.curr_gamma[edgeID] *
+                    self.curr_tau[edgeID])
             sys_vul += edge_vul
             self.vulnerability[edgeID] = edge_vul
         self.curr_sys_vul = sum(self.vulnerability.values())
@@ -253,3 +254,28 @@ class GT():
                                 
 if __name__ == "__main__":
     s = SumoSim()
+    travel_times = [1665,1672,1638,1638,1672,1638,1702,1638,1645,1638,1638,
+                    1668,1638,1658,1664,1638,1638,1667,1638,1738,1638,1659,
+                    1638,1638,1681,1638,1669,1668,1638,1638,1769,1638,1817,
+                    1638,1735,1638,1638,1735,1638]
+    vul_list = []
+    for g in s.gt:
+        vul_list += g.vulnerabilities.values.tolist()[-1]
+    print(vul_list)
+    print(scipy.stats.spearmanr(travel_times, vul_list))
+    
+    d = dict(zip(travel_times, vul_list))
+    print(sorted(d.values()))
+    
+    """
+    short_vul = []
+    short_travel = []
+    for i, vul in enumerate(vul_list):
+        if vul != 0:
+            short_vul.append(vul)
+            short_travel.append(travel_times[i])
+    print("")
+    print(short_travel)
+    print(short_vul)
+    print(scipy.stats.spearmanr(short_travel, short_vul))
+    """
