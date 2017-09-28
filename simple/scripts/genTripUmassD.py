@@ -53,12 +53,13 @@ def gen_trips_new():
     curr_car = 0
     st = ""
     while curr_car < tot_cars:
-        st += '<trip id="%d" depart="%.2f" fromTaz="%s" toTaz="%s"/>\n' % (curr_car, curr_car*1.0,'source','source')
+        #st += '<trip id="%d" depart="%.2f" fromTaz="%s" toTaz="%s"/>\n' % (curr_car, curr_car*1.0,'source','source')
+        st += '<trip id="{}" depart="{}" from="{}" to="{}"/>\n'.format(curr_car, curr_car*1.0,'-1to0','5to-5')
         curr_car += 1
     return st
 
 fl += gen_trips_new()
 fl += '</trips>'
 
-f = open('./trips/trip.xml','w')
+f = open('../trips/trip.xml','w')
 f.write(fl)
