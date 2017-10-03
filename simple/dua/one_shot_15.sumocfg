@@ -1,0 +1,28 @@
+<configuration>
+    <files>
+        <net-file value="../network/simple.net.xml"/>
+        <route-files value="../trips/trip.xml"/>
+        <vehroutes value="vehroutes_15.xml"/>
+        <summary value="summary_15.xml"/>
+        <tripinfo value="tripinfo_15.xml"/>
+        <weight-files value="../config/link_weights.xml"/>
+        <additional-files value="dump_15.add.xml"/>
+    </files>
+    <process>
+        <begin value="0"/>
+        <route-steps value="200"/>
+        <routing-algorithm value="astar"/>
+        <device.rerouting.probability value="1"/>
+        <device.rerouting.period value="15"/>
+        <device.rerouting.adaptation-interval value="1"/>
+        <device.rerouting.with-taz value="False"/>
+        <device.rerouting.explicit value=""/>
+        <vehroute-output.last-route value="False"/>
+        <vehroute-output.exit-times value="False"/>
+        <vehroute-output.sorted value="False"/>
+    </process>
+    <reports>
+        <verbose value="True"/>
+        <no-warnings value="True"/>
+    </reports>
+</configuration>
