@@ -10,6 +10,10 @@ import traci
 import sumolib
 from collections import defaultdict
 import scipy.stats
+import matplotlib.pyplot as plt
+import math
+from traci.exceptions import FatalTraCIError
+
 
 class SumoSim():
     SUMOBIN = "sumo"
@@ -23,28 +27,43 @@ class SumoSim():
                       (e.getID() != '-1to0' and e.getID() != '5to-5')]
         self.densities = defaultdict(float)
         self.delta = 500
-        self.gt = [GT(self.edges, 0), GT(self.edges, 1), GT(self.edges, 2)]
-        self.epsilon = [float('Inf'), float('Inf'), float('Inf')]
-        self.curr_vuls = [0.0,0.0,0.0]
-        self.weights = [0,0,0]
+        self.gt = []
+        self.epsilon = []
+        self.curr_vuls = []
+        self.weights = []
+        self.t0_vuls = []
+        self.corr = []
+        self.pval = []
+        
+        #self.gt = [GT(self.edges, 0), GT(self.edges, 1), GT(self.edges, 2)]
+        #self.epsilon = [float('Inf'), float('Inf'), float('Inf')]
+        #self.curr_vuls = [0.0,0.0,0.0]
+        #self.weights = [0,0,0]
         
         self.iteration = 1
         while self.stop_condition():
-            #Initialize and subscribe to data from the simulation 
-            print('Iteration {}'.format(self.iteration))
-            traci.start(self.SUMOCMD)
-            #self.set_weights(0)
-            for edge in self.edges:
-                traci.edge.subscribe(edge.getID(), 
-                                     varIDs=(16,96), begin=0, end=86400000)
-            self.run_sim()
-            traci.close()
-            self.generate_edge_weights()
-            epsilon = ["%.3f" % v for v in self.epsilon]
-            print(epsilon)
-            vuls = ["%.3f" % v for v in self.curr_vuls]
-            print(vuls)
-            self.iteration += 1
+            try:
+                #Initialize and subscribe to data from the simulation 
+                traci.start(self.SUMOCMD)
+                #self.set_weights(0)
+                for edge in self.edges:
+                    traci.edge.subscribe(edge.getID(), 
+                                         varIDs=(16,96), begin=0, end=86400000)
+                self.run_sim()
+                traci.close()
+                self.generate_edge_weights()
+                epsilon = ["%.3f" % v for v in self.epsilon]
+                print(epsilon)
+                vuls = ["%.3f" % v for v in self.curr_vuls]
+                print(vuls)
+                if self.iteration > 1:
+                    self.calc_spearman()
+                self.iteration += 1
+            except KeyboardInterrupt or FatalTraCIError:
+                print("Stopped algorithm at iteration {}".format(self.iteration))
+                break
+        #plt.plot(self.t0_vuls)
+        
     
     def generate_edge_weights(self):
         op = "<meandata>\n"
@@ -66,9 +85,12 @@ class SumoSim():
     
     def stop_condition(self):
         result = True
-        if (abs(self.epsilon[0]) <= 0.01 and 
-              abs(self.epsilon[1]) <= 0.01 and abs(self.epsilon[2]) <= 0.01):
-            result = False
+        if self.iteration > 1:
+            if all(ep <= 0.01 for ep in self.epsilon) or self.iteration == 251:
+                result = False
+            #if (abs(self.epsilon[0]) <= 0.01 and 
+            #  abs(self.epsilon[1]) <= 0.01 and abs(self.epsilon[2]) <= 0.01):
+                
         
         return result
     
@@ -86,6 +108,14 @@ class SumoSim():
     def collect_interval_data(self):
         if self.step % self.delta == 0 and int(self.step/self.delta) > 0:
             interval = int(self.step/self.delta) - 1
+            #print(interval, len(self.gt))
+            #if self.iteration == 1:
+            if interval == len(self.gt):
+                self.gt.append(GT(self.edges, interval))
+                self.epsilon.append(float('Inf'))
+                self.curr_vuls.append(0)
+                self.weights.append(0)
+                          
             curr_gt = self.gt[interval]
             for edge in self.edges:
                 #veh/unit length over interval
@@ -96,6 +126,18 @@ class SumoSim():
     def reroute_vehicles(self):
         if self.iteration > 1:
             vehIDs = traci.edge.getLastStepVehicleIDs('-1to0')
+            """
+            for edge in self.edges:
+                edgeID = edge.getID()
+                if edgeID == '0to1':
+                    penalty = 1.1
+                else:
+                    penalty = 1
+                #print("Penalty = {}".format(penalty))   
+                tt = traci.edge.getTraveltime(edgeID) * penalty
+                #traci.edge.adaptTraveltime(edgeID, tt)
+                traci.edge.setEffort(edgeID, tt)
+            """ 
             for vid in vehIDs:
                 #for edge in self.edges:
                 #    e_effort = 0
@@ -114,7 +156,30 @@ class SumoSim():
                 #print("not equal! {} {}".format(v_tt, e_tt))
                 traci.vehicle.rerouteEffort(vid)
                 #traci.vehicle.rerouteTraveltime(vid, currentTravelTimes=True)
+            #self.print_travel_times()
+        
    
+    def print_travel_times(self):
+        t_0to1 = traci.edge.getTraveltime('0to1')
+        t_1to3 = traci.edge.getTraveltime('1to3')
+        t_3to5 = traci.edge.getTraveltime('3to5')
+        p1_total = t_0to1 + t_1to3 + t_3to5
+        
+        t_0to2 = traci.edge.getEffort('0to1', self.step)
+        t_2to4 = traci.edge.getEffort('1to3', self.step)
+        t_4to5 = traci.edge.getEffort('3to5', self.step)
+        p2_total = t_0to2 + t_2to4 + t_4to5
+        
+        """
+        t_0to2 = traci.edge.getTraveltime('0to2')
+        t_2to4 = traci.edge.getTraveltime('2to4')
+        t_4to5 = traci.edge.getTraveltime('4to5')
+        p2_total = t_0to2 + t_2to4 + t_4to5
+        """
+        print("Travel Time path 1: {} + {} + {} = {}".format(t_0to1, t_1to3, t_3to5, p1_total))
+        print("Travel Time path 2: {} + {} + {} = {}".format(t_0to2, t_2to4, t_4to5, p2_total))
+    
+    
     def collect_num_veh(self):
         for edge in self.edges:
             res = traci.edge.getSubscriptionResults(edge.getID())
@@ -122,6 +187,7 @@ class SumoSim():
                 self.densities[edge.getID()] += res[16]
     
     def calculate_all(self):
+        self.collect_interval_data()
         total_densities = 0
         total_tau_gamma = 0
         for gt in self.gt:
@@ -145,12 +211,27 @@ class SumoSim():
                         gt.prev_sys_vul)
             self.curr_vuls[i] = gt.curr_sys_vul
             
-            gt.gamma.to_csv('gamma_v3_{}.csv'.format(i))
-            gt.rho.to_csv('rho_v3_{}.csv'.format(i))
-            gt.tau.to_csv('tau_v3_{}.csv'.format(i))
-            gt.densities.to_csv('densities_v3_{}.csv'.format(i))
+            gt.gamma.to_csv('gamma_v5_{}.csv'.format(i))
+            gt.rho.to_csv('rho_v5_{}.csv'.format(i))
+            gt.tau.to_csv('tau_v5_{}.csv'.format(i))
+            gt.densities.to_csv('densities_v5_{}.csv'.format(i))
             gt.vulnerabilities.to_csv('vulnerability_v3_{}.csv'.format(i))
+        
+        self.t0_vuls.append(self.gt[0].curr_sys_vul)
     
+    def calc_spearman(self):
+        travel_times = [1665,1672,1638,1638,1672,1638,1702,1638,1645,1638,1638,
+                    1668,1638,1658,1664,1638,1638,1667,1638,1738,1638,1659,
+                    1638,1638,1681,1638,1669,1668,1638,1638,1769,1638,1817,
+                    1638,1735,1638,1638,1735,1638]
+        vul_list = []
+        for g in self.gt:
+            vul_list += g.vulnerabilities.values.tolist()[-1]
+        #print(vul_list)
+        #print(scipy.stats.spearmanr(travel_times, vul_list))
+        corr, pval = scipy.stats.spearmanr(travel_times, vul_list)
+        self.corr.append(corr)
+        self.pval.append(pval)
     
     def run_sim(self):
         self.arrived = 0
@@ -159,7 +240,8 @@ class SumoSim():
         while self.arrived < 500:
             #self.set_weights()
             self.collect_interval_data()
-            self.reroute_vehicles()
+            if self.iteration > 1:
+                self.reroute_vehicles()
             traci.simulationStep()
             self.step += 1
             self.arrived += traci.simulation.getArrivedNumber()
@@ -188,7 +270,7 @@ class GT():
         
         self.iteration = 0
         
-        self.beta = 1.0/12.0
+        self.beta = 1.0
         self.alpha = 2.0
         
         for edge in self.edges:
@@ -231,8 +313,8 @@ class GT():
     def calc_edge_cost(self):
         for edge in self.edges:
             edgeID = edge.getID()
-            self.curr_tau[edgeID] = ((self.alpha/self.iteration)* self.s_exp[edgeID] +
-                         (1 -(self.alpha/self.iteration)) * self.prev_tau[edgeID])
+            self.curr_tau[edgeID] = ((1/self.iteration**self.alpha)* self.s_exp[edgeID] +
+                         (1 -(1/self.iteration**self.alpha)) * self.prev_tau[edgeID])
                          
     def calc_gamma(self):
         for edge in self.edges:
@@ -258,7 +340,7 @@ class GT():
         for edge in self.edges:
             edgeID = edge.getID()
             edge_vul = (self.curr_rho[edgeID] * self.curr_gamma[edgeID] *
-                    self.prev_tau[edgeID])
+                    self.curr_tau[edgeID])
             sys_vul += edge_vul
             self.vulnerability[edgeID] = edge_vul
         self.curr_sys_vul = sum(self.vulnerability.values())  
@@ -266,28 +348,23 @@ class GT():
 
 if __name__ == "__main__":
     s = SumoSim()
-    travel_times = [1665,1672,1638,1638,1672,1638,1702,1638,1645,1638,1638,
-                    1668,1638,1658,1664,1638,1638,1667,1638,1738,1638,1659,
-                    1638,1638,1681,1638,1669,1668,1638,1638,1769,1638,1817,
-                    1638,1735,1638,1638,1735,1638]
-    vul_list = []
-    for g in s.gt:
-        vul_list += g.vulnerabilities.values.tolist()[-1]
-    print(vul_list)
-    print(scipy.stats.spearmanr(travel_times, vul_list))
+    f = open('corr_v_iteration.csv', 'w')
+    for i in range(len(s.corr)):
+        f.write('{},{}'.format(s.corr[i], s.pval[i]))
+    f.close()
     
-    d = dict(zip(travel_times, vul_list))
-    print(sorted(d.values()))
+    #d = dict(zip(travel_times, vul_list))
+    #print(sorted(d.values()))
     
     
-    short_vul = []
-    short_travel = []
-    for i, vul in enumerate(vul_list):
-        if vul != 0:
-            short_vul.append(vul)
-            short_travel.append(travel_times[i])
-    print("")
-    print(short_travel)
-    print(short_vul)
-    print(scipy.stats.spearmanr(short_travel, short_vul))
+    #short_vul = []
+    #short_travel = []
+    #for i, vul in enumerate(vul_list):
+    #    if vul != 0:
+    #        short_vul.append(vul)
+    #        short_travel.append(travel_times[i])
+    #print("")
+    #print(short_travel)
+    #print(short_vul)
+    #print(scipy.stats.spearmanr(short_travel, short_vul))
            
