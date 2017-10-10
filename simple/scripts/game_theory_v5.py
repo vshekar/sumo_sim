@@ -68,6 +68,10 @@ class SumoSim():
                 print("Stopped algorithm at iteration {}".format(self.iteration))
                 break
         #plt.plot(self.t0_vuls)
+        #Values to calculate for the last iteration
+        self.prev_vuls = [x for x in self.curr_vuls]
+        self.calc_spearman()
+        
         fig = plt.figure()
         plt.plot(self.total_epsilon)
         plt.xlabel('Iteration', fontsize=18)
@@ -287,8 +291,8 @@ class GT():
         
         self.iteration = 0
         
-        self.beta = 1.0
-        self.alpha = 1.0
+        self.beta = 1.0/12.0
+        self.alpha = 2.0
         
         for edge in self.edges:
             edgeID = edge.getID()
@@ -366,8 +370,8 @@ class GT():
 
 if __name__ == "__main__":
     s = SumoSim()
-    f = open('alpha1_beta1_results.csv', 'w')
-    for i in range(len(s.corr)):
+    f = open('alpha2_beta1-12_results.csv', 'w')
+    for i in range(s.iteration - 1):
         f.write('{},{},{},{},{}\n'.format( i+1, s.corr[i], s.pval[i], s.total_epsilon[i], s.total_vuls[i]))
     f.close()
     
