@@ -30,11 +30,13 @@ class SumoSim():
         self.gt = []
         self.epsilon = []
         self.curr_vuls = []
+        self.prev_vuls = []
         self.weights = []
         self.t0_vuls = []
         self.corr = []
         self.pval = []
-        
+        self.total_epsilon = []
+        self.total_vuls = []
         #self.gt = [GT(self.edges, 0), GT(self.edges, 1), GT(self.edges, 2)]
         #self.epsilon = [float('Inf'), float('Inf'), float('Inf')]
         #self.curr_vuls = [0.0,0.0,0.0]
@@ -43,6 +45,7 @@ class SumoSim():
         self.iteration = 1
         while self.stop_condition():
             try:
+                self.prev_vuls = [x for x in self.curr_vuls]
                 #Initialize and subscribe to data from the simulation 
                 traci.start(self.SUMOCMD)
                 #self.set_weights(0)
@@ -52,10 +55,12 @@ class SumoSim():
                 self.run_sim()
                 traci.close()
                 self.generate_edge_weights()
+                print('Iteration {}'.format(self.iteration))
                 epsilon = ["%.3f" % v for v in self.epsilon]
                 print(epsilon)
                 vuls = ["%.3f" % v for v in self.curr_vuls]
                 print(vuls)
+                
                 if self.iteration > 1:
                     self.calc_spearman()
                 self.iteration += 1
@@ -63,6 +68,12 @@ class SumoSim():
                 print("Stopped algorithm at iteration {}".format(self.iteration))
                 break
         #plt.plot(self.t0_vuls)
+        fig = plt.figure()
+        plt.plot(self.total_epsilon)
+        plt.xlabel('Iteration', fontsize=18)
+        plt.ylabel('$\epsilon$', fontsize=16)
+        fig.savefig('plot.png')
+        print(self.total_epsilon)
         
     
     def generate_edge_weights(self):
@@ -86,11 +97,16 @@ class SumoSim():
     def stop_condition(self):
         result = True
         if self.iteration > 1:
-            if all(ep <= 0.01 for ep in self.epsilon) or self.iteration == 251:
-                result = False
+            #if all(ep <= 0.01 for ep in self.epsilon) or self.iteration == 251:
+            #    result = False
             #if (abs(self.epsilon[0]) <= 0.01 and 
             #  abs(self.epsilon[1]) <= 0.01 and abs(self.epsilon[2]) <= 0.01):
-                
+            ep = abs(sum(self.prev_vuls) - sum(self.curr_vuls))
+            
+            self.total_epsilon.append(ep)
+            self.total_vuls.append(sum(self.curr_vuls))
+            if ep < 0.01 or self.iteration == 251:
+                result = False
         
         return result
     
@@ -114,6 +130,7 @@ class SumoSim():
                 self.gt.append(GT(self.edges, interval))
                 self.epsilon.append(float('Inf'))
                 self.curr_vuls.append(0)
+                self.prev_vuls.append(0)
                 self.weights.append(0)
                           
             curr_gt = self.gt[interval]
@@ -264,14 +281,14 @@ class GT():
         
         self.curr_rho = {}
         self.curr_gamma = {}
-        self.curr_tau = {}
+        self.curr_tau = defaultdict(float)
         self.curr_sys_vul = 0
         self.prev_sys_vul = 0
         
         self.iteration = 0
         
         self.beta = 1.0
-        self.alpha = 2.0
+        self.alpha = 1.0
         
         for edge in self.edges:
             edgeID = edge.getID()
@@ -297,6 +314,7 @@ class GT():
         self.prev_rho = self.curr_rho
         self.prev_gamma = self.curr_gamma
         self.prev_tau = self.curr_tau
+        self.curr_tau = defaultdict(float)
         self.prev_sys_vul = self.curr_sys_vul
         
         self.save_to_table()
@@ -348,9 +366,9 @@ class GT():
 
 if __name__ == "__main__":
     s = SumoSim()
-    f = open('corr_v_iteration.csv', 'w')
+    f = open('alpha1_beta1_results.csv', 'w')
     for i in range(len(s.corr)):
-        f.write('{},{}'.format(s.corr[i], s.pval[i]))
+        f.write('{},{},{},{},{}\n'.format( i+1, s.corr[i], s.pval[i], s.total_epsilon[i], s.total_vuls[i]))
     f.close()
     
     #d = dict(zip(travel_times, vul_list))

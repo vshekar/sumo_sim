@@ -16,7 +16,7 @@ from traci.exceptions import FatalTraCIError
 
 
 class SumoSim():
-    SUMOBIN = "sumo"
+    SUMOBIN = "sumo-gui"
     SUMOCMD = [SUMOBIN, "-c", "../../config/config.cfg", "--time-to-teleport", "-1"]
     
     def __init__(self):
