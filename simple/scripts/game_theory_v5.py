@@ -291,8 +291,8 @@ class GT():
         
         self.iteration = 0
         
-        self.beta = 1.0/12.0
-        self.alpha = 2.0
+        self.beta = 1.0
+        self.alpha = 2.5
         
         for edge in self.edges:
             edgeID = edge.getID()
