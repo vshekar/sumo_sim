@@ -109,7 +109,7 @@ class SumoSim():
             
             self.total_epsilon.append(ep)
             self.total_vuls.append(sum(self.curr_vuls))
-            if ep < 0.01 or self.iteration == 251:
+            if ep < 0.01:
                 result = False
         
         return result
@@ -281,6 +281,7 @@ class GT():
         self.densities = pd.DataFrame()
         self.vulnerabilities = pd.DataFrame()
         
+        
         self.vulnerability = {}
         
         self.curr_rho = {}
@@ -292,7 +293,7 @@ class GT():
         self.iteration = 0
         
         self.beta = 1.0
-        self.alpha = 2.5
+        self.alpha = 2.0
         
         for edge in self.edges:
             edgeID = edge.getID()
@@ -306,6 +307,7 @@ class GT():
         self.tau = self.tau.append(self.prev_tau, ignore_index=True)
         self.densities = self.densities.append(self.avg_density, 
                                                ignore_index=True)
+        #self.s_expected = self.s_expected.append(self.s_exp, ignore_index=True)
         self.vulnerabilities = self.vulnerabilities.append(self.vulnerability, 
                                                            ignore_index=True)
     
@@ -335,8 +337,8 @@ class GT():
     def calc_edge_cost(self):
         for edge in self.edges:
             edgeID = edge.getID()
-            self.curr_tau[edgeID] = ((1/self.iteration**self.alpha)* self.s_exp[edgeID] +
-                         (1 -(1/self.iteration**self.alpha)) * self.prev_tau[edgeID])
+            self.curr_tau[edgeID] = round((1/self.iteration**self.alpha)* self.s_exp[edgeID] +
+                         (1 -(1/self.iteration**self.alpha)) * self.prev_tau[edgeID], 1)
                          
     def calc_gamma(self):
         for edge in self.edges:
