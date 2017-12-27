@@ -41,17 +41,21 @@ def parse_matsim_demand():
     print(len(demand))
 
 def generate_trip_file(demand):
+    print('Generating trip file')
     demand = sorted(demand,key=itemgetter(0))
     string = '<?xml version="1.0"?>\n<trips>\n'
     count = 0
+    f = open('../trips/trip.xml', 'w')
+    f.write(string)
     for trip in demand:
-        string += '<trip id="{}" depart="{}" departLane="best" departPos="random_free" departSpeed="max" arrivalPos="0" from="{}" to="{}"/>\n'.format(count, trip[0], trip[1], trip[2])
-        count += 1
-        if trip[0] > 53997:
-            print(string)
-    string += '</trips>'
-    with open('../trips/trip.xml','w') as f:
+        string = '<trip id="{}" depart="{}" departLane="best" departPos="random_free" departSpeed="max" arrivalPos="0" from="{}" to="{}"/>\n'.format(count, trip[0], trip[1], trip[2])
         f.write(string)
+        count += 1
+    string = '</trips>'
+    f.write(string)
+    f.close()
+    #with open('../trips/trip.xml','w') as f:
+    #    f.write(string)
 
 
 
@@ -68,11 +72,11 @@ def convert_time(time):
     #Converts 24 hour time to simulation seconds starting from 06:00:00
     hr,mn,sc = time.split(":")
     hr,mn,sc = int(hr),int(mn),int(sc)
-    sim_time = sc + 60*(mn)
-    if hr-6 < 0:
-        sim_time += (24+(hr-6))*3600
-    else:
-        sim_time += (hr-6)*3600
+    sim_time = sc + 60*(mn) + 3600*hr
+    #if hr-6 < 0:
+    #    sim_time += (24+(hr-6))*3600
+    #else:
+     #   sim_time += (hr-6)*3600
 
     return sim_time
 
