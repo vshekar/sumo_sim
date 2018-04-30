@@ -1,0 +1,42 @@
+Loading net-file from '../config/deterministic/../../network/SF_with_TLS_combined.net.xml'... done (10ms).
+Loading additional-files from '../config/deterministic/additional_42_1_0_28800.xml'... done (1ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Teleporting vehicle '50507'; waited too long (wrong lane), lane='17_1_0', time=30577.00.
+Warning: Vehicle '50507' ends teleporting on edge '22_1', time 30577.00.
+Warning: Teleporting vehicle '52987'; waited too long (wrong lane), lane='17_1_0', time=30655.00.
+Warning: Vehicle '52987' ends teleporting on edge '22_1', time 30655.00.
+Warning: Teleporting vehicle '45350'; waited too long (jam), lane=':7_0_1', time=30766.00.
+Warning: Teleporting vehicle '42060'; waited too long (wrong lane), lane='17_1_0', time=30779.00.
+Warning: Vehicle '42060' ends teleporting on edge '22_1', time 30779.00.
+Warning: Vehicle '45350' ends teleporting on edge '17_1', time 30917.00.
+Warning: Teleporting vehicle '56474'; waited too long (wrong lane), lane='17_1_0', time=31038.00.
+Warning: Vehicle '56474' ends teleporting on edge '22_1', time 31038.00.
+Warning: Teleporting vehicle '58564'; waited too long (wrong lane), lane='51_1_1', time=34054.00.
+Warning: Vehicle '58564' ends teleporting on edge '26_1', time 34054.00.
+Warning: Teleporting vehicle '51664'; waited too long (wrong lane), lane='51_1_1', time=34055.00.
+Warning: Vehicle '51664' ends teleporting on edge '29_1', time 34055.00.
+Warning: Teleporting vehicle '98334'; waited too long (yield), lane='25_1_1', time=64100.00.
+Warning: Teleporting vehicle '114357'; waited too long (yield), lane='32_1_0', time=64267.00.
+Warning: Teleporting vehicle '106054'; waited too long (yield), lane='43_1_0', time=64282.00.
+Warning: Vehicle '114357' ends teleporting on edge '29_1', time 64569.00.
+Warning: Vehicle '106054' ends teleporting on edge '29_1', time 64570.00.
+Warning: Teleporting vehicle '122380'; waited too long (yield), lane='7_1_2', time=64891.00.
+Warning: Vehicle '122380' ends teleporting on edge '36_1', time 65062.00.
+Warning: Vehicle '98334' ends teleporting on edge '47_1', time 65709.00.
+Simulation ended at time: 76802.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 486183ms
+ Real time factor: 157.969
+ UPS: 143475.232577
+Vehicles: 
+ Inserted: 50466 (Loaded: 168220)
+ Running: 0
+ Waiting: 0
+Teleports: 11 (Jam: 1, Yield: 4, Wrong Lane: 6)
+
+AStarRouter answered 381 queries and explored 45.06 edges on average.
+AStarRouter spent 3ms answering queries (0.01ms on average).
+DijkstraRouterTT answered 1365941 queries and explored 32.49 edges on average.
+DijkstraRouterTT spent 3094ms answering queries (0.00ms on average).

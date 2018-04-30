@@ -1,0 +1,62 @@
+Loading net-file from '../config/deterministic/../../network/SF_with_TLS_combined.net.xml'... done (10ms).
+Loading additional-files from '../config/deterministic/additional_46_1_0_28800.xml'... done (0ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Teleporting vehicle '24224'; waited too long (jam), lane=':13_3_1', time=28887.00.
+Warning: Vehicle '24224' ends teleporting on edge '76_1', time 30437.00.
+Warning: Teleporting vehicle '50490'; waited too long (yield), lane='49_1_0', time=31946.00.
+Warning: Teleporting vehicle '53574'; waited too long (jam), lane='49_1_0', time=31976.00.
+Warning: Teleporting vehicle '46490'; waited too long (wrong lane), lane='49_1_1', time=31982.00.
+Warning: Teleporting vehicle '40627'; waited too long (yield), lane='29_1_0', time=32027.00.
+Warning: Vehicle '40627' ends teleporting on edge '49_1', time 32027.00.
+Warning: Teleporting vehicle '25197'; waited too long (jam), lane='22_1_0', time=32050.00.
+Warning: Teleporting vehicle '56320'; waited too long (yield), lane='22_1_1', time=32255.00.
+Warning: Vehicle '56320' ends teleporting on edge '49_1', time 32255.00.
+Warning: Teleporting vehicle '39367'; waited too long (yield), lane='55_1_1', time=32358.00.
+Warning: Vehicle '50490' ends teleporting on edge '51_1', time 32518.00.
+Warning: Teleporting vehicle '59194'; waited too long (yield), lane='55_1_1', time=32558.00.
+Warning: Teleporting vehicle '57054'; waited too long (yield), lane='60_1_2', time=32582.00.
+Warning: Vehicle '53574' ends teleporting on edge '51_1', time 32582.00.
+Warning: Teleporting vehicle '45634'; waited too long (wrong lane), lane='49_1_1', time=32583.00.
+Warning: Vehicle '46490' ends teleporting on edge '51_1', time 32637.00.
+Warning: Teleporting vehicle '53770'; waited too long (wrong lane), lane='49_1_1', time=32683.00.
+Warning: Vehicle '57054' ends teleporting on edge '55_1', time 32791.00.
+Warning: Vehicle '39367' ends teleporting on edge '49_1', time 32826.00.
+Warning: Vehicle '25197' ends teleporting on edge '51_1', time 32843.00.
+Warning: Vehicle '59194' ends teleporting on edge '49_1', time 32887.00.
+Warning: Teleporting vehicle '51380'; waited too long (yield), lane='29_1_0', time=32931.00.
+Warning: Teleporting vehicle '54627'; waited too long (wrong lane), lane='49_1_1', time=32944.00.
+Warning: Vehicle '45634' ends teleporting on edge '51_1', time 32961.00.
+Warning: Teleporting vehicle '55960'; waited too long (jam), lane='22_1_0', time=32970.00.
+Warning: Vehicle '53770' ends teleporting on edge '51_1', time 33056.00.
+Warning: Teleporting vehicle '32717'; waited too long (yield), lane='22_1_0', time=33159.00.
+Warning: Teleporting vehicle '38534'; waited too long (yield), lane='55_1_1', time=33463.00.
+Warning: Vehicle '51380' teleports beyond arrival edge '49_1', time 33527.00.
+Warning: Vehicle '54627' ends teleporting on edge '51_1', time 33527.00.
+Warning: Vehicle '32717' ends teleporting on edge '49_1', time 33532.00.
+Warning: Vehicle '55960' ends teleporting on edge '49_1', time 33533.00.
+Warning: Vehicle '38534' ends teleporting on edge '49_1', time 33539.00.
+Warning: Teleporting vehicle '55067'; waited too long (wrong lane), lane='49_1_1', time=33581.00.
+Warning: Vehicle '55067' ends teleporting on edge '51_1', time 33586.00.
+Warning: Teleporting vehicle '48420'; waited too long (wrong lane), lane='49_1_1', time=33672.00.
+Warning: Vehicle '48420' ends teleporting on edge '51_1', time 33700.00.
+Warning: Teleporting vehicle '117100'; waited too long (jam), lane='43_1_0', time=64636.00.
+Warning: Vehicle '117100' ends teleporting on edge '29_1', time 64677.00.
+Warning: Teleporting vehicle '123634'; waited too long (yield), lane='7_1_2', time=64916.00.
+Warning: Vehicle '123634' ends teleporting on edge '36_1', time 64916.00.
+Simulation ended at time: 76824.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 507529ms
+ Real time factor: 151.369
+ UPS: 143042.196604
+Vehicles: 
+ Inserted: 50466 (Loaded: 168220)
+ Running: 0
+ Waiting: 0
+Teleports: 21 (Jam: 5, Yield: 10, Wrong Lane: 6)
+
+AStarRouter answered 1453 queries and explored 39.15 edges on average.
+AStarRouter spent 13ms answering queries (0.01ms on average).
+DijkstraRouterTT answered 1902738 queries and explored 32.04 edges on average.
+DijkstraRouterTT spent 4244ms answering queries (0.00ms on average).

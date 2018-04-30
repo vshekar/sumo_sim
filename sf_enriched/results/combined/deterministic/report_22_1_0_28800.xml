@@ -1,0 +1,63 @@
+Loading net-file from '../config/deterministic/../../network/SF_with_TLS_combined.net.xml'... done (10ms).
+Loading additional-files from '../config/deterministic/additional_22_1_0_28800.xml'... done (1ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Vehicle '15824' performs emergency stop at the end of lane '60_1_1' because there is no connection to the next edge (decel=-25.00, offset = 8.39), time=26465.00.
+Warning: Vehicle '44277' performs emergency stop at the end of lane '50_1_1' because there is no connection to the next edge (decel=-13.90, offset = 3.11), time=27689.00.
+Warning: Teleporting vehicle '34454'; waited too long (wrong lane), lane='56_1_1', time=28486.00.
+Warning: Vehicle '34454' ends teleporting on edge '61_1', time 28486.00.
+Warning: Teleporting vehicle '27997'; waited too long (wrong lane), lane='56_1_1', time=28487.00.
+Warning: Vehicle '27997' ends teleporting on edge '61_1', time 28487.00.
+Warning: Teleporting vehicle '32777'; waited too long (wrong lane), lane='56_1_2', time=28595.00.
+Warning: Vehicle '32777' ends teleporting on edge '61_1', time 28595.00.
+Warning: Teleporting vehicle '23360'; waited too long (yield), lane='50_1_0', time=28823.00.
+Warning: Vehicle '23360' ends teleporting on edge '56_1', time 28823.00.
+Warning: Teleporting vehicle '53857'; waited too long (jam), lane='17_1_1', time=30124.00.
+Warning: Teleporting vehicle '53884'; waited too long (yield), lane='47_1_1', time=30151.00.
+Warning: Vehicle '53884' ends teleporting on edge '21_1', time 30151.00.
+Warning: Vehicle '53857' ends teleporting on edge '21_1', time 30273.00.
+Warning: Teleporting vehicle '54000'; waited too long (jam), lane='17_1_1', time=31030.00.
+Warning: Teleporting vehicle '45077'; waited too long (yield), lane='47_1_1', time=31056.00.
+Warning: Vehicle '45077' ends teleporting on edge '21_1', time 31056.00.
+Warning: Teleporting vehicle '53704'; waited too long (wrong lane), lane='21_1_0', time=31147.00.
+Warning: Vehicle '53704' ends teleporting on edge '25_1', time 31147.00.
+Warning: Teleporting vehicle '38060'; waited too long (wrong lane), lane='56_1_1', time=31188.00.
+Warning: Vehicle '38060' ends teleporting on edge '61_1', time 31188.00.
+Warning: Vehicle '54000' ends teleporting on edge '21_1', time 31304.00.
+Warning: Teleporting vehicle '51487'; waited too long (wrong lane), lane='51_1_1', time=34672.00.
+Warning: Vehicle '51487' ends teleporting on edge '29_1', time 34672.00.
+Warning: Teleporting vehicle '45940'; waited too long (wrong lane), lane='51_1_1', time=34673.00.
+Warning: Vehicle '45940' ends teleporting on edge '29_1', time 34673.00.
+Warning: Teleporting vehicle '28470'; waited too long (wrong lane), lane='51_1_1', time=34674.00.
+Warning: Vehicle '28470' ends teleporting on edge '29_1', time 34674.00.
+Warning: Teleporting vehicle '53737'; waited too long (wrong lane), lane='51_1_1', time=34676.00.
+Warning: Vehicle '53737' ends teleporting on edge '29_1', time 34676.00.
+Warning: Teleporting vehicle '55114'; waited too long (wrong lane), lane='51_1_1', time=34677.00.
+Warning: Vehicle '55114' ends teleporting on edge '29_1', time 34677.00.
+Warning: Teleporting vehicle '19874'; waited too long (wrong lane), lane='56_1_2', time=34965.00.
+Warning: Vehicle '19874' ends teleporting on edge '61_1', time 34965.00.
+Warning: Teleporting vehicle '22170'; waited too long (wrong lane), lane='56_1_2', time=34967.00.
+Warning: Vehicle '22170' ends teleporting on edge '61_1', time 34967.00.
+Warning: Teleporting vehicle '43850'; waited too long (wrong lane), lane='51_1_1', time=36575.00.
+Warning: Vehicle '43850' ends teleporting on edge '29_1', time 36575.00.
+Warning: Teleporting vehicle '116277'; waited too long (jam), lane='28_1_1', time=64718.00.
+Warning: Vehicle '116277' ends teleporting on edge '46_1', time 64754.00.
+Warning: Teleporting vehicle '119904'; waited too long (yield), lane='7_1_2', time=64922.00.
+Warning: Vehicle '119904' ends teleporting on edge '36_1', time 65428.00.
+Simulation ended at time: 76733.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 495250ms
+ Real time factor: 154.938
+ UPS: 149467.709238
+Vehicles: 
+ Inserted: 50466 (Loaded: 168220)
+ Running: 0
+ Waiting: 0
+Teleports: 20 (Jam: 3, Yield: 4, Wrong Lane: 13)
+Emergency Stops: 2
+
+AStarRouter answered 2294 queries and explored 36.87 edges on average.
+AStarRouter spent 22ms answering queries (0.01ms on average).
+DijkstraRouterTT answered 1289335 queries and explored 32.71 edges on average.
+DijkstraRouterTT spent 2928ms answering queries (0.00ms on average).

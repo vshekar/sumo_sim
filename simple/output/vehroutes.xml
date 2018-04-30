@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 4/30/2018 1:59:20 PM by SUMO gui Version 0.30.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="../config/../network/simple.net.xml"/>
+        <route-files value="../config/../trips/trip.xml"/>
+        <additional-files value="../config/additional.xml"/>
+    </input>
+
+    <output>
+        <summary-output value="../config/../output/summary.xml"/>
+        <vehroute-output value="../output/vehroutes.xml"/>
+        <vehroute-output.route-length value="true"/>
+    </output>
+
+    <processing>
+        <time-to-teleport value="300"/>
+    </processing>
+
+    <report>
+        <log value="../config/../output/report.xml"/>
+    </report>
+
+    <mesoscopic>
+        <mesosim value="true"/>
+    </mesoscopic>
+
+</configuration>

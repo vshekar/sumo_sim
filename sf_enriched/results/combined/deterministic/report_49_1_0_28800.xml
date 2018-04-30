@@ -1,0 +1,24 @@
+Loading net-file from '../config/deterministic/../../network/SF_with_TLS_combined.net.xml'... done (10ms).
+Loading additional-files from '../config/deterministic/additional_49_1_0_28800.xml'... done (0ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Teleporting vehicle '51554'; waited too long (wrong lane), lane='51_1_1', time=37601.00.
+Warning: Vehicle '51554' ends teleporting on edge '29_1', time 37601.00.
+Warning: Teleporting vehicle '123194'; waited too long (yield), lane='7_1_2', time=64891.00.
+Warning: Vehicle '123194' ends teleporting on edge '36_1', time 64891.00.
+Simulation ended at time: 76713.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 493111ms
+ Real time factor: 155.569
+ UPS: 149798.593015
+Vehicles: 
+ Inserted: 50466 (Loaded: 168220)
+ Running: 0
+ Waiting: 0
+Teleports: 2 (Yield: 1, Wrong Lane: 1)
+
+AStarRouter answered 2761 queries and explored 43.44 edges on average.
+AStarRouter spent 28ms answering queries (0.01ms on average).
+DijkstraRouterTT answered 1076189 queries and explored 31.23 edges on average.
+DijkstraRouterTT spent 2543ms answering queries (0.00ms on average).

@@ -11,7 +11,7 @@ from operator import itemgetter
 
 def parse_matsim_demand():
     demand = []
-    net = sumolib.net.readNet('../network/SF_sumo.net.xml')
+    net = sumolib.net.readNet('../network/SF_with_TLS_combined.net.xml')
     tree = ET.parse('../trips/Siouxfalls_population_matsim.xml')
     root = tree.getroot()
     total_count = 0
@@ -45,7 +45,7 @@ def generate_trip_file(demand):
     demand = sorted(demand,key=itemgetter(0))
     string = '<?xml version="1.0"?>\n<trips>\n'
     count = 0
-    f = open('../trips/trip.xml', 'w')
+    f = open('../trips/trip_simplified.xml', 'w')
     f.write(string)
     for trip in demand:
         string = '<trip id="{}" depart="{}" departLane="best" departPos="random_free" departSpeed="max" arrivalPos="0" from="{}" to="{}"/>\n'.format(count, trip[0], trip[1], trip[2])

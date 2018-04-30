@@ -254,6 +254,11 @@ class SumoSim():
         self.corr.append(corr)
         self.pval.append(pval)
     
+    def collect_vehicle_paths(self):
+        arr_veh = traci.simulation.getArrivedIDList()
+        #for veh in arr_veh:
+        #    travel_dist = 
+    
     def run_sim(self):
         self.arrived = 0
         self.step = 0
@@ -267,6 +272,7 @@ class SumoSim():
             self.step += 1
             self.arrived += traci.simulation.getArrivedNumber()
             #Collects data for every second veh/unit length
+            self.collect_vehicle_paths()
             self.collect_num_veh()                          
         self.calculate_all()   
             

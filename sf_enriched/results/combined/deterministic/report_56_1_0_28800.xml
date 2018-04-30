@@ -1,0 +1,26 @@
+Loading net-file from '../config/deterministic/../../network/SF_with_TLS_combined.net.xml'... done (10ms).
+Loading additional-files from '../config/deterministic/additional_56_1_0_28800.xml'... done (0ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Vehicle '37704' performs emergency stop at the end of lane '18_1_2' because there is no connection to the next edge (decel=-25.00, offset = 10.28), time=27383.00.
+Warning: Teleporting vehicle '126324'; waited too long (jam), lane='43_1_0', time=65346.00.
+Warning: Teleporting vehicle '135557'; waited too long (wrong lane), lane='43_1_1', time=65430.00.
+Warning: Vehicle '135557' ends teleporting on edge '30_1', time 65430.00.
+Warning: Vehicle '126324' ends teleporting on edge '29_1', time 65472.00.
+Simulation ended at time: 76823.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 478998ms
+ Real time factor: 160.383
+ UPS: 142918.999662
+Vehicles: 
+ Inserted: 50466 (Loaded: 168220)
+ Running: 0
+ Waiting: 0
+Teleports: 2 (Jam: 1, Wrong Lane: 1)
+Emergency Stops: 1
+
+AStarRouter answered 853 queries and explored 42.01 edges on average.
+AStarRouter spent 4ms answering queries (0.00ms on average).
+DijkstraRouterTT answered 1466423 queries and explored 31.14 edges on average.
+DijkstraRouterTT spent 3249ms answering queries (0.00ms on average).

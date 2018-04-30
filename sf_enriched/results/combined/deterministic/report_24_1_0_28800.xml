@@ -1,0 +1,56 @@
+Loading net-file from '../config/deterministic/../../network/SF_with_TLS_combined.net.xml'... done (10ms).
+Loading additional-files from '../config/deterministic/additional_24_1_0_28800.xml'... done (0ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Cannot keep destination edge '24_1' for vehicle '2980' due to closed edges. Terminating route.
+Warning: Cannot keep destination edge '24_1' for vehicle '3370' due to closed edges. Terminating route.
+Warning: Cannot keep destination edge '24_1' for vehicle '22460' due to closed edges. Terminating route.
+Warning: Vehicle '27840' is not allowed on source edge '24_1'.
+Warning: No route for vehicle '27840' found.
+Warning: Vehicle '27840' is not allowed on source edge '24_1'.
+Warning: No route for vehicle '27840' found.
+Warning: Vehicle '27840' is not allowed on source edge '24_1'.
+Warning: No route for vehicle '27840' found.
+Warning: Vehicle '27840' is not allowed on source edge '24_1'.
+Warning: No route for vehicle '27840' found.
+Warning: Vehicle '27840' is not allowed on source edge '24_1'.
+Warning: No route for vehicle '27840' found.
+Warning: Vehicle '27840' is not allowed on source edge '24_1'.
+Warning: No route for vehicle '27840' found.
+Warning: Cannot keep destination edge '24_1' for vehicle '29077' due to closed edges. Terminating route.
+Warning: Cannot keep destination edge '24_1' for vehicle '31250' due to closed edges. Terminating route.
+Warning: Cannot keep destination edge '24_1' for vehicle '25110' due to closed edges. Terminating route.
+Warning: Cannot keep destination edge '24_1' for vehicle '36007' due to closed edges. Terminating route.
+Warning: Cannot keep destination edge '24_1' for vehicle '27030' due to closed edges. Terminating route.
+Warning: Teleporting vehicle '35277'; waited too long (wrong lane), lane='56_1_2', time=30791.00.
+Warning: Vehicle '35277' ends teleporting on edge '61_1', time 30791.00.
+Warning: Teleporting vehicle '56117'; waited too long (wrong lane), lane='51_1_1', time=33258.00.
+Warning: Vehicle '56117' ends teleporting on edge '29_1', time 33258.00.
+Warning: Teleporting vehicle '29867'; waited too long (jam), lane='49_1_0', time=33583.00.
+Warning: Teleporting vehicle '28914'; waited too long (yield), lane='58_1_1', time=33584.00.
+Warning: Vehicle '29867' ends teleporting on edge '51_1', time 33620.00.
+Warning: Vehicle '28914' ends teleporting on edge '51_1', time 33698.00.
+Warning: Teleporting vehicle '127454'; waited too long (jam), lane='28_1_1', time=64266.00.
+Warning: Teleporting vehicle '123194'; waited too long (yield), lane='7_1_2', time=64806.00.
+Warning: Vehicle '127454' ends teleporting on edge '46_1', time 64840.00.
+Warning: Teleporting vehicle '120304'; waited too long (wrong lane), lane='36_1_0', time=65039.00.
+Warning: Vehicle '120304' ends teleporting on edge '31_1', time 65039.00.
+Warning: Vehicle '123194' ends teleporting on edge '36_1', time 65148.00.
+Warning: Teleporting vehicle '107474'; waited too long (jam), lane='43_1_0', time=65348.00.
+Warning: Vehicle '107474' ends teleporting on edge '29_1', time 65656.00.
+Simulation ended at time: 76733.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 456745ms
+ Real time factor: 168
+ UPS: 148662.713330
+Vehicles: 
+ Inserted: 50466 (Loaded: 168220)
+ Running: 0
+ Waiting: 0
+Teleports: 8 (Jam: 3, Yield: 2, Wrong Lane: 3)
+
+AStarRouter answered 831 queries and explored 40.42 edges on average.
+AStarRouter spent 6ms answering queries (0.01ms on average).
+DijkstraRouterTT answered 1163821 queries and explored 31.18 edges on average.
+DijkstraRouterTT spent 2645ms answering queries (0.00ms on average).

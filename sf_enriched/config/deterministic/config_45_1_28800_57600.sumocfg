@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 <input>
-<net-file value="../../network/SF_with_TLS.net.xml"/>
-<route-files value="../../trips/trip.xml"/>
+<net-file value="../../network/SF_with_TLS_combined.net.xml"/>
+<route-files value="../../trips/trip_combined_gen.xml"/>
 <additional-files value="additional_45_1_28800_57600.xml"/>
 </input>
 <processing>
 <scale value="0.3"/>
 </processing>
 <output>
-<summary-output value="../../output/summary_45_1_28800_57600.xml"/>
+<summary-output value="../../results/combined/deterministic/summary_45_1_28800_57600.xml"/>
 </output>
 <report>
-<log value="../../output/report_45_1_28800_57600.xml"/>
+<log value="../../results/combined/deterministic/report_45_1_28800_57600.xml"/>
 </report>
 </configuration>

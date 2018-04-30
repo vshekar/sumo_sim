@@ -1,0 +1,30 @@
+Loading net-file from '../config/deterministic/../../network/SF_with_TLS_combined.net.xml'... done (10ms).
+Loading additional-files from '../config/deterministic/additional_26_1_0_28800.xml'... done (0ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Cannot keep destination edge '26_1' for vehicle '13390' due to closed edges. Terminating route.
+Warning: Cannot keep destination edge '26_1' for vehicle '16894' due to closed edges. Terminating route.
+Warning: Teleporting vehicle '118377'; waited too long (jam), lane='28_1_1', time=64444.00.
+Warning: Vehicle '118377' ends teleporting on edge '46_1', time 64573.00.
+Warning: Teleporting vehicle '133610'; waited too long (wrong lane), lane='36_1_0', time=64798.00.
+Warning: Vehicle '133610' ends teleporting on edge '31_1', time 64798.00.
+Warning: Teleporting vehicle '123994'; waited too long (yield), lane='7_1_2', time=64892.00.
+Warning: Teleporting vehicle '126244'; waited too long (wrong lane), lane='36_1_0', time=64939.00.
+Warning: Vehicle '126244' ends teleporting on edge '31_1', time 64939.00.
+Warning: Vehicle '123994' ends teleporting on edge '36_1', time 65054.00.
+Simulation ended at time: 76671.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 472021ms
+ Real time factor: 162.431
+ UPS: 143746.172310
+Vehicles: 
+ Inserted: 50466 (Loaded: 168220)
+ Running: 0
+ Waiting: 0
+Teleports: 4 (Jam: 1, Yield: 1, Wrong Lane: 2)
+
+AStarRouter answered 949 queries and explored 52.89 edges on average.
+AStarRouter spent 6ms answering queries (0.01ms on average).
+DijkstraRouterTT answered 1219130 queries and explored 30.19 edges on average.
+DijkstraRouterTT spent 2661ms answering queries (0.00ms on average).
